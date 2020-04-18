@@ -1,0 +1,18 @@
+06:17:51 **** Incremental Build of configuration Nios II for project final_project_software_bsp ****
+wsl make all 
+Makefile not up to date.
+/mnt/c/Lab7/final_project/final_project_soc.sopcinfo has been modified since the BSP was generated.
+
+Generate the BSP to update the Makefile, and then build again.
+
+To generate from Eclipse:
+ 1. Right-click the BSP project.
+ 2. In the Nios II Menu, click Generate BSP.
+
+To generate from the command line:
+ nios2-bsp-generate-files --settings=<settings file> --bsp-dir=<target bsp files directory>
+
+make: *** [Makefile:561: public.mk] Error 1
+
+06:17:52 Build Finished (took 347ms)
+

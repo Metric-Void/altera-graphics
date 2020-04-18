@@ -1,0 +1,18 @@
+# Ignore binary build files.
+*.elf
+*.sof
+
+# Ignore Quartus File Lock
+*.flock
+
+# Ignore Quartus db and remote
+incremental_db/
+db/
+output_files/
+RemoteSystemsTempFiles/
+
+# Ignore backup files
+*.bak
+
+# Include Eclipse files
+!.metadata/
