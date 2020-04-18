@@ -1,6 +1,7 @@
 # Ignore binary build files.
 *.elf
 *.sof
+*.cdf
 
 # Ignore Quartus File Lock
 *.flock
@@ -14,5 +15,5 @@ RemoteSystemsTempFiles/
 # Ignore backup files
 *.bak
 
-# Include Eclipse files
-!.metadata/
+# Ignore Eclipse workspace
+.metadata/
