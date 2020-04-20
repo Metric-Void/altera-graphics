@@ -15,6 +15,8 @@
 
 // color_mapper: Decide which color to be output to VGA for each pixel.
 module  color_mapper ( input        [9:0] DrawX, DrawY,       // Current pixel coordinates
+							  input        [1:0] extend_color,
+							  input        [7:0] export_pattern,
                        output logic [7:0] VGA_R, VGA_G, VGA_B // VGA RGB output
                      );
     
@@ -25,13 +27,15 @@ module  color_mapper ( input        [9:0] DrawX, DrawY,       // Current pixel c
     assign VGA_G = Green;
     assign VGA_B = Blue;
     
-    // Produce a white screen for now.
-    always_comb
+    
+    always_comb          //color correpond to 00,01,10,11 can be separately defined for each pattern
     begin
-			// White ball
-			Red = 8'hff;
-			Green = 8'hff;
-			Blue = 8'hff;
+			case (export_pattern)      //determine the shape code first
+				2'h00: case (extend_color)      //define color code for each shape
+					2'b00: Red = 8'hff;
+							 Green = 8'hff;
+							 Blue = 8'hff;
+					2'b01: ...
     end 
     
 endmodule
