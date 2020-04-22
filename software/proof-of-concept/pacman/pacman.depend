@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1587452074 source:/home/allen/codes/pacman/main.c
+	<stdio.h>
+
+1587519592 source:/home/allen/codes/pacman/logic.c
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<string.h>
+	<stdint.h>
+	<stdbool.h>
+	"logic.h"
+
+1587519639 /home/allen/codes/pacman/logic.h
+
