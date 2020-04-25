@@ -28,14 +28,17 @@ module  color_mapper ( input        [9:0] DrawX, DrawY,       // Current pixel c
     assign VGA_B = Blue;
     
     
-    always_comb          //color correpond to 00,01,10,11 can be separately defined for each pattern
-    begin
-			case (export_pattern)      //determine the shape code first
-				2'h00: case (extend_color)      //define color code for each shape
-					2'b00: Red = 8'hff;
-							 Green = 8'hff;
-							 Blue = 8'hff;
-					2'b01: ...
-    end 
+//    always_comb          //color correpond to 00,01,10,11 can be separately defined for each pattern
+//    begin
+//			case (export_pattern)      //determine the shape code first
+//				2'h00: case (extend_color)      //define color code for each shape
+//					2'b00: begin
+//							 Red = 8'hff;
+//							 Green = 8'hff;
+//							 Blue = 8'hff;
+//					end
+//					endcase
+//				endcase
+//    end 
     
 endmodule
