@@ -53,7 +53,7 @@ final_project_soc fp_system (
 	.hpi_data_out_port(hpi_data_out), 			// hpi_data_out.export
 	.hpi_r_export(hpi_r),        					// hpi_r.export
 	.hpi_reset_export(hpi_reset),    			// hpi_reset.export
-	.hpi_w_export(hpi_w),        					// hpi_w.export
+	.hpi_w_export(hpi_w)        					// hpi_w.export
 );
 
 // HPI Interface from lab 8.

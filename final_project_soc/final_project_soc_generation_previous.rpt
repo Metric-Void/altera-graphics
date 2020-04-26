@@ -10,20 +10,18 @@ Progress: Adding nios2_gen2_0 [altera_nios2_gen2 19.1]
 Progress: Parameterizing module nios2_gen2_0
 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 19.1]
 Progress: Parameterizing module onchip_memory2_0
-Progress: Adding org_rd [altera_avalon_pio 19.1]
-Progress: Parameterizing module org_rd
-Progress: Adding otg_addr [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_addr
-Progress: Adding otg_cs [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_cs
-Progress: Adding otg_data_in [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_data_in
-Progress: Adding otg_data_out [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_data_out
-Progress: Adding otg_rst [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_rst
-Progress: Adding otg_wr [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_wr
+Progress: Adding otg_hpi_address [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_address
+Progress: Adding otg_hpi_cs [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_cs
+Progress: Adding otg_hpi_data [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_data
+Progress: Adding otg_hpi_r [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_r
+Progress: Adding otg_hpi_reset [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_reset
+Progress: Adding otg_hpi_w [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_w
 Progress: Adding sdram [altera_avalon_new_sdram_controller 19.1]
 Progress: Parameterizing module sdram
 Progress: Adding sdram_pll [altpll 19.1]
@@ -37,7 +35,7 @@ Progress: Parameterizing connections
 Progress: Validating
 Progress: Done reading input file
 Info: final_project_soc.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
-Info: final_project_soc.otg_data_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: final_project_soc.otg_hpi_data: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Info: final_project_soc.sdram: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
 Info: final_project_soc.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
 Info: final_project_soc.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
@@ -56,20 +54,18 @@ Progress: Adding nios2_gen2_0 [altera_nios2_gen2 19.1]
 Progress: Parameterizing module nios2_gen2_0
 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 19.1]
 Progress: Parameterizing module onchip_memory2_0
-Progress: Adding org_rd [altera_avalon_pio 19.1]
-Progress: Parameterizing module org_rd
-Progress: Adding otg_addr [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_addr
-Progress: Adding otg_cs [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_cs
-Progress: Adding otg_data_in [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_data_in
-Progress: Adding otg_data_out [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_data_out
-Progress: Adding otg_rst [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_rst
-Progress: Adding otg_wr [altera_avalon_pio 19.1]
-Progress: Parameterizing module otg_wr
+Progress: Adding otg_hpi_address [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_address
+Progress: Adding otg_hpi_cs [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_cs
+Progress: Adding otg_hpi_data [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_data
+Progress: Adding otg_hpi_r [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_r
+Progress: Adding otg_hpi_reset [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_reset
+Progress: Adding otg_hpi_w [altera_avalon_pio 19.1]
+Progress: Parameterizing module otg_hpi_w
 Progress: Adding sdram [altera_avalon_new_sdram_controller 19.1]
 Progress: Parameterizing module sdram
 Progress: Adding sdram_pll [altpll 19.1]
@@ -83,7 +79,7 @@ Progress: Parameterizing connections
 Progress: Validating
 Progress: Done reading input file
 Info: final_project_soc.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
-Info: final_project_soc.otg_data_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: final_project_soc.otg_hpi_data: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Info: final_project_soc.sdram: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
 Info: final_project_soc.sysid_qsys_0: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
 Info: final_project_soc.sysid_qsys_0: Time stamp will be automatically updated when this component is generated.
@@ -93,38 +89,34 @@ Info: Inserting clock-crossing logic between cmd_demux_001.src2 and cmd_mux_003.
 Info: Inserting clock-crossing logic between rsp_demux_003.src0 and rsp_mux.sink3
 Info: Inserting clock-crossing logic between rsp_demux_003.src1 and rsp_mux_001.sink2
 Info: jtag_uart_0: Starting RTL generation for module 'final_project_soc_jtag_uart_0'
-Info: jtag_uart_0:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=final_project_soc_jtag_uart_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0002_jtag_uart_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0002_jtag_uart_0_gen//final_project_soc_jtag_uart_0_component_configuration.pl  --do_build_sim=0  ]
+Info: jtag_uart_0:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=final_project_soc_jtag_uart_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0002_jtag_uart_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0002_jtag_uart_0_gen//final_project_soc_jtag_uart_0_component_configuration.pl  --do_build_sim=0  ]
 Info: jtag_uart_0: Done RTL generation for module 'final_project_soc_jtag_uart_0'
 Info: jtag_uart_0: "final_project_soc" instantiated altera_avalon_jtag_uart "jtag_uart_0"
 Info: nios2_gen2_0: "final_project_soc" instantiated altera_nios2_gen2 "nios2_gen2_0"
 Info: onchip_memory2_0: Starting RTL generation for module 'final_project_soc_onchip_memory2_0'
-Info: onchip_memory2_0:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=final_project_soc_onchip_memory2_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0003_onchip_memory2_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0003_onchip_memory2_0_gen//final_project_soc_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
+Info: onchip_memory2_0:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=final_project_soc_onchip_memory2_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0003_onchip_memory2_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0003_onchip_memory2_0_gen//final_project_soc_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
 Info: onchip_memory2_0: Done RTL generation for module 'final_project_soc_onchip_memory2_0'
 Info: onchip_memory2_0: "final_project_soc" instantiated altera_avalon_onchip_memory2 "onchip_memory2_0"
-Info: org_rd: Starting RTL generation for module 'final_project_soc_org_rd'
-Info: org_rd:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_org_rd --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0004_org_rd_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0004_org_rd_gen//final_project_soc_org_rd_component_configuration.pl  --do_build_sim=0  ]
-Info: org_rd: Done RTL generation for module 'final_project_soc_org_rd'
-Info: org_rd: "final_project_soc" instantiated altera_avalon_pio "org_rd"
-Info: otg_addr: Starting RTL generation for module 'final_project_soc_otg_addr'
-Info: otg_addr:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_addr --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0005_otg_addr_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0005_otg_addr_gen//final_project_soc_otg_addr_component_configuration.pl  --do_build_sim=0  ]
-Info: otg_addr: Done RTL generation for module 'final_project_soc_otg_addr'
-Info: otg_addr: "final_project_soc" instantiated altera_avalon_pio "otg_addr"
-Info: otg_data_in: Starting RTL generation for module 'final_project_soc_otg_data_in'
-Info: otg_data_in:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_data_in --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0006_otg_data_in_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0006_otg_data_in_gen//final_project_soc_otg_data_in_component_configuration.pl  --do_build_sim=0  ]
-Info: otg_data_in: Done RTL generation for module 'final_project_soc_otg_data_in'
-Info: otg_data_in: "final_project_soc" instantiated altera_avalon_pio "otg_data_in"
-Info: otg_data_out: Starting RTL generation for module 'final_project_soc_otg_data_out'
-Info: otg_data_out:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_data_out --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0007_otg_data_out_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0007_otg_data_out_gen//final_project_soc_otg_data_out_component_configuration.pl  --do_build_sim=0  ]
-Info: otg_data_out: Done RTL generation for module 'final_project_soc_otg_data_out'
-Info: otg_data_out: "final_project_soc" instantiated altera_avalon_pio "otg_data_out"
+Info: otg_hpi_address: Starting RTL generation for module 'final_project_soc_otg_hpi_address'
+Info: otg_hpi_address:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_hpi_address --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0004_otg_hpi_address_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0004_otg_hpi_address_gen//final_project_soc_otg_hpi_address_component_configuration.pl  --do_build_sim=0  ]
+Info: otg_hpi_address: Done RTL generation for module 'final_project_soc_otg_hpi_address'
+Info: otg_hpi_address: "final_project_soc" instantiated altera_avalon_pio "otg_hpi_address"
+Info: otg_hpi_cs: Starting RTL generation for module 'final_project_soc_otg_hpi_cs'
+Info: otg_hpi_cs:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_hpi_cs --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0005_otg_hpi_cs_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0005_otg_hpi_cs_gen//final_project_soc_otg_hpi_cs_component_configuration.pl  --do_build_sim=0  ]
+Info: otg_hpi_cs: Done RTL generation for module 'final_project_soc_otg_hpi_cs'
+Info: otg_hpi_cs: "final_project_soc" instantiated altera_avalon_pio "otg_hpi_cs"
+Info: otg_hpi_data: Starting RTL generation for module 'final_project_soc_otg_hpi_data'
+Info: otg_hpi_data:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=final_project_soc_otg_hpi_data --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0006_otg_hpi_data_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0006_otg_hpi_data_gen//final_project_soc_otg_hpi_data_component_configuration.pl  --do_build_sim=0  ]
+Info: otg_hpi_data: Done RTL generation for module 'final_project_soc_otg_hpi_data'
+Info: otg_hpi_data: "final_project_soc" instantiated altera_avalon_pio "otg_hpi_data"
 Info: sdram: Starting RTL generation for module 'final_project_soc_sdram'
-Info: sdram:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=final_project_soc_sdram --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0008_sdram_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0008_sdram_gen//final_project_soc_sdram_component_configuration.pl  --do_build_sim=0  ]
+Info: sdram:   Generation command is [exec C:/intelfpga_lite/19.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=final_project_soc_sdram --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0007_sdram_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0007_sdram_gen//final_project_soc_sdram_component_configuration.pl  --do_build_sim=0  ]
 Info: sdram: Done RTL generation for module 'final_project_soc_sdram'
 Info: sdram: "final_project_soc" instantiated altera_avalon_new_sdram_controller "sdram"
 Info: sdram_pll: "final_project_soc" instantiated altpll "sdram_pll"
 Info: sysid_qsys_0: "final_project_soc" instantiated altera_avalon_sysid_qsys "sysid_qsys_0"
 Info: timer_0: Starting RTL generation for module 'final_project_soc_timer_0'
-Info: timer_0:   Generation command is [exec C:/intelFPGA_lite/19.1/quartus/bin64//perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=final_project_soc_timer_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0012_timer_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0012_timer_0_gen//final_project_soc_timer_0_component_configuration.pl  --do_build_sim=0  ]
+Info: timer_0:   Generation command is [exec C:/intelFPGA_lite/19.1/quartus/bin64//perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/intelfpga_lite/19.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=final_project_soc_timer_0 --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0011_timer_0_gen/ --quartus_dir=C:/intelfpga_lite/19.1/quartus --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0011_timer_0_gen//final_project_soc_timer_0_component_configuration.pl  --do_build_sim=0  ]
 Info: timer_0: Done RTL generation for module 'final_project_soc_timer_0'
 Info: timer_0: "final_project_soc" instantiated altera_avalon_timer "timer_0"
 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
@@ -140,26 +132,25 @@ Info: avalon_st_adapter_009: Inserting error_adapter: error_adapter_0
 Info: avalon_st_adapter_010: Inserting error_adapter: error_adapter_0
 Info: avalon_st_adapter_011: Inserting error_adapter: error_adapter_0
 Info: avalon_st_adapter_012: Inserting error_adapter: error_adapter_0
-Info: avalon_st_adapter_013: Inserting error_adapter: error_adapter_0
 Info: mm_interconnect_0: "final_project_soc" instantiated altera_mm_interconnect "mm_interconnect_0"
 Info: irq_mapper: "final_project_soc" instantiated altera_irq_mapper "irq_mapper"
 Info: rst_controller: "final_project_soc" instantiated altera_reset_controller "rst_controller"
 Info: cpu: Starting RTL generation for module 'final_project_soc_nios2_gen2_0_cpu'
-Info: cpu:   Generation command is [exec C:/intelFPGA_lite/19.1/quartus/bin64//perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/cpu_lib -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/nios_lib -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -- C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/generate_rtl.pl --name=final_project_soc_nios2_gen2_0_cpu --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0015_cpu_gen/ --quartus_bindir=C:/intelFPGA_lite/19.1/quartus/bin64/ --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_4952002494075488534.dir/0015_cpu_gen//final_project_soc_nios2_gen2_0_cpu_processor_configuration.pl  --do_build_sim=0  ]
-Info: cpu: # 2020.04.18 17:15:32 (*) Starting Nios II generation
-Info: cpu: # 2020.04.18 17:15:32 (*)   Elaborating CPU configuration settings
-Info: cpu: # 2020.04.18 17:15:32 (*)   Creating all objects for CPU
-Info: cpu: # 2020.04.18 17:15:32 (*)     Testbench
-Info: cpu: # 2020.04.18 17:15:32 (*)     Instruction decoding
-Info: cpu: # 2020.04.18 17:15:32 (*)       Instruction fields
-Info: cpu: # 2020.04.18 17:15:32 (*)       Instruction decodes
-Info: cpu: # 2020.04.18 17:15:33 (*)       Signals for RTL simulation waveforms
-Info: cpu: # 2020.04.18 17:15:33 (*)       Instruction controls
-Info: cpu: # 2020.04.18 17:15:33 (*)     Pipeline frontend
-Info: cpu: # 2020.04.18 17:15:33 (*)     Pipeline backend
-Info: cpu: # 2020.04.18 17:15:34 (*)   Generating RTL from CPU objects
-Info: cpu: # 2020.04.18 17:15:34 (*)   Creating plain-text RTL
-Info: cpu: # 2020.04.18 17:15:35 (*) Done Nios II generation
+Info: cpu:   Generation command is [exec C:/intelFPGA_lite/19.1/quartus/bin64//perl/bin/perl.exe -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/19.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/cpu_lib -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/nios_lib -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -I C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -- C:/intelfpga_lite/19.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/generate_rtl.pl --name=final_project_soc_nios2_gen2_0_cpu --dir=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0014_cpu_gen/ --quartus_bindir=C:/intelFPGA_lite/19.1/quartus/bin64/ --verilog --config=C:/Users/leezi/AppData/Local/Temp/alt8370_1925068493952715962.dir/0014_cpu_gen//final_project_soc_nios2_gen2_0_cpu_processor_configuration.pl  --do_build_sim=0  ]
+Info: cpu: # 2020.04.18 17:53:21 (*) Starting Nios II generation
+Info: cpu: # 2020.04.18 17:53:21 (*)   Elaborating CPU configuration settings
+Info: cpu: # 2020.04.18 17:53:21 (*)   Creating all objects for CPU
+Info: cpu: # 2020.04.18 17:53:21 (*)     Testbench
+Info: cpu: # 2020.04.18 17:53:21 (*)     Instruction decoding
+Info: cpu: # 2020.04.18 17:53:21 (*)       Instruction fields
+Info: cpu: # 2020.04.18 17:53:21 (*)       Instruction decodes
+Info: cpu: # 2020.04.18 17:53:22 (*)       Signals for RTL simulation waveforms
+Info: cpu: # 2020.04.18 17:53:22 (*)       Instruction controls
+Info: cpu: # 2020.04.18 17:53:22 (*)     Pipeline frontend
+Info: cpu: # 2020.04.18 17:53:22 (*)     Pipeline backend
+Info: cpu: # 2020.04.18 17:53:23 (*)   Generating RTL from CPU objects
+Info: cpu: # 2020.04.18 17:53:23 (*)   Creating plain-text RTL
+Info: cpu: # 2020.04.18 17:53:24 (*) Done Nios II generation
 Info: cpu: Done RTL generation for module 'final_project_soc_nios2_gen2_0_cpu'
 Info: cpu: "nios2_gen2_0" instantiated altera_nios2_gen2_unit "cpu"
 Info: nios2_gen2_0_data_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "nios2_gen2_0_data_master_translator"
@@ -189,6 +180,6 @@ Info: crosser: "mm_interconnect_0" instantiated altera_avalon_st_handshake_clock
 Info: Reusing file C:/Lab7/final_project/final_project_soc/synthesis/submodules/altera_avalon_st_pipeline_base.v
 Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
-Info: final_project_soc: Done "final_project_soc" with 38 modules, 62 files
+Info: final_project_soc: Done "final_project_soc" with 37 modules, 61 files
 Info: qsys-generate succeeded.
 Info: Finished: Create HDL design files for synthesis

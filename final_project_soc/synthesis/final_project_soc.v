@@ -23,10 +23,21 @@ module final_project_soc (
 		inout  wire [31:0] sdram_wire_dq,     //             .dq
 		output wire [3:0]  sdram_wire_dqm,    //             .dqm
 		output wire        sdram_wire_ras_n,  //             .ras_n
-		output wire        sdram_wire_we_n    //             .we_n
+		output wire        sdram_wire_we_n,   //             .we_n
+		output wire [7:0]  tt_cm_b_export,    //      tt_cm_b.export
+		output wire [7:0]  tt_cm_g_export,    //      tt_cm_g.export
+		output wire [7:0]  tt_cm_r_export,    //      tt_cm_r.export
+		input  wire [9:0]  tt_cm_x_export,    //      tt_cm_x.export
+		input  wire [9:0]  tt_cm_y_export     //      tt_cm_y.export
 	);
 
-	wire         sdram_pll_c2_clk;                                            // sdram_pll:c2 -> [irq_mapper:clk, jtag_uart_0:clk, mm_interconnect_0:sdram_pll_c2_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, otg_hpi_address:clk, otg_hpi_cs:clk, otg_hpi_data:clk, otg_hpi_r:clk, otg_hpi_reset:clk, otg_hpi_w:clk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys_0:clock, timer_0:clk]
+	wire         sdram_pll_c2_clk;                                            // sdram_pll:c2 -> [Color_Palette_0:CLK_100, Sprite_RAM_0:CLK_100, Tile_Table_0:CLK_100, irq_mapper:clk, jtag_uart_0:clk, mm_interconnect_0:sdram_pll_c2_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, otg_hpi_address:clk, otg_hpi_cs:clk, otg_hpi_data:clk, otg_hpi_r:clk, otg_hpi_reset:clk, otg_hpi_w:clk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys_0:clock, timer_0:clk]
+	wire   [1:0] tile_table_0_conduit_palette_index_export;                   // Tile_Table_0:color_index -> Color_Palette_0:color_index
+	wire   [2:0] tile_table_0_conduit_palette_select_export;                  // Tile_Table_0:palette -> Color_Palette_0:palette
+	wire  [23:0] color_palette_0_conduit_rgb_export;                          // Color_Palette_0:rgb -> Tile_Table_0:rgb
+	wire  [15:0] sprite_ram_0_exports_data_export;                            // Sprite_RAM_0:get_data -> Tile_Table_0:get_data
+	wire   [7:0] tile_table_0_conduit_sprite_ram_index_export;                // Tile_Table_0:get_index -> Sprite_RAM_0:get_index
+	wire   [3:0] tile_table_0_conduit_sprite_ram_line_export;                 // Tile_Table_0:get_line -> Sprite_RAM_0:get_line
 	wire  [31:0] nios2_gen2_0_data_master_readdata;                           // mm_interconnect_0:nios2_gen2_0_data_master_readdata -> nios2_gen2_0:d_readdata
 	wire         nios2_gen2_0_data_master_waitrequest;                        // mm_interconnect_0:nios2_gen2_0_data_master_waitrequest -> nios2_gen2_0:d_waitrequest
 	wire         nios2_gen2_0_data_master_debugaccess;                        // nios2_gen2_0:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_gen2_0_data_master_debugaccess
@@ -48,6 +59,27 @@ module final_project_soc (
 	wire         mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read;        // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_read -> jtag_uart_0:av_read_n
 	wire         mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write;       // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_write -> jtag_uart_0:av_write_n
 	wire  [31:0] mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata;   // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
+	wire         mm_interconnect_0_tile_table_0_avalon_slave_chipselect;      // mm_interconnect_0:Tile_Table_0_avalon_slave_chipselect -> Tile_Table_0:AVL_CS
+	wire  [31:0] mm_interconnect_0_tile_table_0_avalon_slave_readdata;        // Tile_Table_0:AVL_READDATA -> mm_interconnect_0:Tile_Table_0_avalon_slave_readdata
+	wire  [12:0] mm_interconnect_0_tile_table_0_avalon_slave_address;         // mm_interconnect_0:Tile_Table_0_avalon_slave_address -> Tile_Table_0:AVL_ADDR
+	wire         mm_interconnect_0_tile_table_0_avalon_slave_read;            // mm_interconnect_0:Tile_Table_0_avalon_slave_read -> Tile_Table_0:AVL_READ
+	wire   [3:0] mm_interconnect_0_tile_table_0_avalon_slave_byteenable;      // mm_interconnect_0:Tile_Table_0_avalon_slave_byteenable -> Tile_Table_0:AVL_BYTE_EN
+	wire         mm_interconnect_0_tile_table_0_avalon_slave_write;           // mm_interconnect_0:Tile_Table_0_avalon_slave_write -> Tile_Table_0:AVL_WRITE
+	wire  [31:0] mm_interconnect_0_tile_table_0_avalon_slave_writedata;       // mm_interconnect_0:Tile_Table_0_avalon_slave_writedata -> Tile_Table_0:AVL_WRITEDATA
+	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_chipselect;    // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_chipselect -> Sprite_RAM_0:AVL_CS
+	wire  [31:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_readdata;      // Sprite_RAM_0:AVL_READDATA -> mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_readdata
+	wire  [10:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_address;       // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_address -> Sprite_RAM_0:AVL_ADDR
+	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_read;          // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_read -> Sprite_RAM_0:AVL_READ
+	wire   [3:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_byteenable;    // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_byteenable -> Sprite_RAM_0:AVL_BYTE_EN
+	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_write;         // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_write -> Sprite_RAM_0:AVL_WRITE
+	wire  [31:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_writedata;     // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_writedata -> Sprite_RAM_0:AVL_WRITEDATA
+	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_chipselect; // mm_interconnect_0:Color_Palette_0_avalon_slave_0_chipselect -> Color_Palette_0:AVL_CS
+	wire  [31:0] mm_interconnect_0_color_palette_0_avalon_slave_0_readdata;   // Color_Palette_0:AVL_READDATA -> mm_interconnect_0:Color_Palette_0_avalon_slave_0_readdata
+	wire   [2:0] mm_interconnect_0_color_palette_0_avalon_slave_0_address;    // mm_interconnect_0:Color_Palette_0_avalon_slave_0_address -> Color_Palette_0:AVL_ADDR
+	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_read;       // mm_interconnect_0:Color_Palette_0_avalon_slave_0_read -> Color_Palette_0:AVL_READ
+	wire   [3:0] mm_interconnect_0_color_palette_0_avalon_slave_0_byteenable; // mm_interconnect_0:Color_Palette_0_avalon_slave_0_byteenable -> Color_Palette_0:AVL_BYTE_EN
+	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_write;      // mm_interconnect_0:Color_Palette_0_avalon_slave_0_write -> Color_Palette_0:AVL_WRITE
+	wire  [31:0] mm_interconnect_0_color_palette_0_avalon_slave_0_writedata;  // mm_interconnect_0:Color_Palette_0_avalon_slave_0_writedata -> Color_Palette_0:AVL_WRITEDATA
 	wire  [31:0] mm_interconnect_0_sysid_qsys_0_control_slave_readdata;       // sysid_qsys_0:readdata -> mm_interconnect_0:sysid_qsys_0_control_slave_readdata
 	wire   [0:0] mm_interconnect_0_sysid_qsys_0_control_slave_address;        // mm_interconnect_0:sysid_qsys_0_control_slave_address -> sysid_qsys_0:address
 	wire  [31:0] mm_interconnect_0_nios2_gen2_0_debug_mem_slave_readdata;     // nios2_gen2_0:debug_mem_slave_readdata -> mm_interconnect_0:nios2_gen2_0_debug_mem_slave_readdata
@@ -117,15 +149,71 @@ module final_project_soc (
 	wire         irq_mapper_receiver0_irq;                                    // jtag_uart_0:av_irq -> irq_mapper:receiver0_irq
 	wire         irq_mapper_receiver1_irq;                                    // timer_0:irq -> irq_mapper:receiver1_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [jtag_uart_0:rst_n, mm_interconnect_0:jtag_uart_0_reset_reset_bridge_in_reset_reset, timer_0:reset_n]
-	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [irq_mapper:reset, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, otg_hpi_address:reset_n, otg_hpi_cs:reset_n, otg_hpi_data:reset_n, otg_hpi_r:reset_n, otg_hpi_reset:reset_n, otg_hpi_w:reset_n, rst_translator:in_reset, sdram:reset_n, sysid_qsys_0:reset_n]
-	wire         rst_controller_001_reset_out_reset_req;                      // rst_controller_001:reset_req -> [nios2_gen2_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
-	wire         nios2_gen2_0_debug_reset_request_reset;                      // nios2_gen2_0:debug_reset_request -> [rst_controller_001:reset_in1, rst_controller_002:reset_in1]
+	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [Color_Palette_0:RESET, Sprite_RAM_0:RESET, Tile_Table_0:RESET, irq_mapper:reset, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, otg_hpi_address:reset_n, otg_hpi_cs:reset_n, otg_hpi_data:reset_n, otg_hpi_r:reset_n, otg_hpi_reset:reset_n, otg_hpi_w:reset_n, rst_translator:in_reset, sdram:reset_n, sysid_qsys_0:reset_n]
+	wire         rst_controller_reset_out_reset_req;                          // rst_controller:reset_req -> [nios2_gen2_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
+	wire         nios2_gen2_0_debug_reset_request_reset;                      // nios2_gen2_0:debug_reset_request -> [rst_controller:reset_in1, rst_controller_002:reset_in1]
+	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [jtag_uart_0:rst_n, mm_interconnect_0:jtag_uart_0_reset_reset_bridge_in_reset_reset, timer_0:reset_n]
 	wire         rst_controller_002_reset_out_reset;                          // rst_controller_002:reset_out -> [mm_interconnect_0:sdram_pll_inclk_interface_reset_reset_bridge_in_reset_reset, sdram_pll:reset]
+
+	color_palette color_palette_0 (
+		.AVL_ADDR      (mm_interconnect_0_color_palette_0_avalon_slave_0_address),    //         avalon_slave_0.address
+		.AVL_BYTE_EN   (mm_interconnect_0_color_palette_0_avalon_slave_0_byteenable), //                       .byteenable
+		.AVL_CS        (mm_interconnect_0_color_palette_0_avalon_slave_0_chipselect), //                       .chipselect
+		.AVL_READ      (mm_interconnect_0_color_palette_0_avalon_slave_0_read),       //                       .read
+		.AVL_READDATA  (mm_interconnect_0_color_palette_0_avalon_slave_0_readdata),   //                       .readdata
+		.AVL_WRITE     (mm_interconnect_0_color_palette_0_avalon_slave_0_write),      //                       .write
+		.AVL_WRITEDATA (mm_interconnect_0_color_palette_0_avalon_slave_0_writedata),  //                       .writedata
+		.RESET         (rst_controller_reset_out_reset),                              //                  reset.reset
+		.CLK_50        (clk_clk),                                                     //               clock_50.clk
+		.CLK_100       (sdram_pll_c2_clk),                                            //              clock_100.clk
+		.color_index   (tile_table_0_conduit_palette_index_export),                   //    conduit_color_index.export
+		.palette       (tile_table_0_conduit_palette_select_export),                  // conduit_palette_select.export
+		.rgb           (color_palette_0_conduit_rgb_export)                           //            conduit_rgb.export
+	);
+
+	sprite_ram sprite_ram_0 (
+		.RESET         (rst_controller_reset_out_reset),                           //          reset.reset
+		.CLK_50        (clk_clk),                                                  //       clock_50.clk
+		.CLK_100       (sdram_pll_c2_clk),                                         //      clock_100.clk
+		.AVL_CS        (mm_interconnect_0_sprite_ram_0_avalon_slave_0_chipselect), // avalon_slave_0.chipselect
+		.AVL_BYTE_EN   (mm_interconnect_0_sprite_ram_0_avalon_slave_0_byteenable), //               .byteenable
+		.AVL_READDATA  (mm_interconnect_0_sprite_ram_0_avalon_slave_0_readdata),   //               .readdata
+		.AVL_WRITEDATA (mm_interconnect_0_sprite_ram_0_avalon_slave_0_writedata),  //               .writedata
+		.AVL_READ      (mm_interconnect_0_sprite_ram_0_avalon_slave_0_read),       //               .read
+		.AVL_WRITE     (mm_interconnect_0_sprite_ram_0_avalon_slave_0_write),      //               .write
+		.AVL_ADDR      (mm_interconnect_0_sprite_ram_0_avalon_slave_0_address),    //               .address
+		.get_index     (tile_table_0_conduit_sprite_ram_index_export),             //  exports_index.export
+		.get_line      (tile_table_0_conduit_sprite_ram_line_export),              //   exports_line.export
+		.get_data      (sprite_ram_0_exports_data_export)                          //   exports_data.export
+	);
+
+	tile_table tile_table_0 (
+		.CLK_100       (sdram_pll_c2_clk),                                       //                clock_100.clk
+		.CLK_50        (clk_clk),                                                //                 clock_50.clk
+		.RESET         (rst_controller_reset_out_reset),                         //                    RESET.reset
+		.AVL_ADDR      (mm_interconnect_0_tile_table_0_avalon_slave_address),    //             avalon_slave.address
+		.AVL_READ      (mm_interconnect_0_tile_table_0_avalon_slave_read),       //                         .read
+		.AVL_WRITE     (mm_interconnect_0_tile_table_0_avalon_slave_write),      //                         .write
+		.AVL_CS        (mm_interconnect_0_tile_table_0_avalon_slave_chipselect), //                         .chipselect
+		.AVL_BYTE_EN   (mm_interconnect_0_tile_table_0_avalon_slave_byteenable), //                         .byteenable
+		.AVL_READDATA  (mm_interconnect_0_tile_table_0_avalon_slave_readdata),   //                         .readdata
+		.AVL_WRITEDATA (mm_interconnect_0_tile_table_0_avalon_slave_writedata),  //                         .writedata
+		.get_index     (tile_table_0_conduit_sprite_ram_index_export),           // conduit_sprite_ram_index.export
+		.get_line      (tile_table_0_conduit_sprite_ram_line_export),            //  conduit_sprite_ram_line.export
+		.get_data      (sprite_ram_0_exports_data_export),                       //  conduit_sprite_ram_data.export
+		.palette       (tile_table_0_conduit_palette_select_export),             //   conduit_palette_select.export
+		.color_index   (tile_table_0_conduit_palette_index_export),              //    conduit_palette_index.export
+		.rgb           (color_palette_0_conduit_rgb_export),                     //      conduit_palette_rgb.export
+		.DrawX         (tt_cm_x_export),                                         //   conduit_color_mapper_x.export
+		.DrawY         (tt_cm_y_export),                                         //   conduit_color_mapper_y.export
+		.VGA_RED       (tt_cm_r_export),                                         //   conduit_color_mapper_r.export
+		.VGA_GREEN     (tt_cm_g_export),                                         //   conduit_color_mapper_g.export
+		.VGA_BLUE      (tt_cm_b_export)                                          //   conduit_color_mapper_b.export
+	);
 
 	final_project_soc_jtag_uart_0 jtag_uart_0 (
 		.clk            (sdram_pll_c2_clk),                                            //               clk.clk
-		.rst_n          (~rst_controller_reset_out_reset),                             //             reset.reset_n
+		.rst_n          (~rst_controller_001_reset_out_reset),                         //             reset.reset_n
 		.av_chipselect  (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_chipselect),  // avalon_jtag_slave.chipselect
 		.av_address     (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_address),     //                  .address
 		.av_read_n      (~mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read),       //                  .read_n
@@ -138,8 +226,8 @@ module final_project_soc (
 
 	final_project_soc_nios2_gen2_0 nios2_gen2_0 (
 		.clk                                 (sdram_pll_c2_clk),                                           //                       clk.clk
-		.reset_n                             (~rst_controller_001_reset_out_reset),                        //                     reset.reset_n
-		.reset_req                           (rst_controller_001_reset_out_reset_req),                     //                          .reset_req
+		.reset_n                             (~rst_controller_reset_out_reset),                            //                     reset.reset_n
+		.reset_req                           (rst_controller_reset_out_reset_req),                         //                          .reset_req
 		.d_address                           (nios2_gen2_0_data_master_address),                           //               data_master.address
 		.d_byteenable                        (nios2_gen2_0_data_master_byteenable),                        //                          .byteenable
 		.d_read                              (nios2_gen2_0_data_master_read),                              //                          .read
@@ -176,14 +264,14 @@ module final_project_soc (
 		.readdata   (mm_interconnect_0_onchip_memory2_0_s1_readdata),   //       .readdata
 		.writedata  (mm_interconnect_0_onchip_memory2_0_s1_writedata),  //       .writedata
 		.byteenable (mm_interconnect_0_onchip_memory2_0_s1_byteenable), //       .byteenable
-		.reset      (rst_controller_001_reset_out_reset),               // reset1.reset
-		.reset_req  (rst_controller_001_reset_out_reset_req),           //       .reset_req
+		.reset      (rst_controller_reset_out_reset),                   // reset1.reset
+		.reset_req  (rst_controller_reset_out_reset_req),               //       .reset_req
 		.freeze     (1'b0)                                              // (terminated)
 	);
 
 	final_project_soc_otg_hpi_address otg_hpi_address (
 		.clk        (sdram_pll_c2_clk),                                //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),             //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),                 //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_address_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_address_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_address_s1_writedata),  //                    .writedata
@@ -194,7 +282,7 @@ module final_project_soc (
 
 	final_project_soc_otg_hpi_cs otg_hpi_cs (
 		.clk        (sdram_pll_c2_clk),                           //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),        //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),            //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_cs_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_cs_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_cs_s1_writedata),  //                    .writedata
@@ -205,7 +293,7 @@ module final_project_soc (
 
 	final_project_soc_otg_hpi_data otg_hpi_data (
 		.clk        (sdram_pll_c2_clk),                             //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),          //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),              //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_data_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_data_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_data_s1_writedata),  //                    .writedata
@@ -217,7 +305,7 @@ module final_project_soc (
 
 	final_project_soc_otg_hpi_cs otg_hpi_r (
 		.clk        (sdram_pll_c2_clk),                          //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),       //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_r_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_r_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_r_s1_writedata),  //                    .writedata
@@ -228,7 +316,7 @@ module final_project_soc (
 
 	final_project_soc_otg_hpi_cs otg_hpi_reset (
 		.clk        (sdram_pll_c2_clk),                              //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),           //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),               //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_reset_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_reset_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_reset_s1_writedata),  //                    .writedata
@@ -239,7 +327,7 @@ module final_project_soc (
 
 	final_project_soc_otg_hpi_cs otg_hpi_w (
 		.clk        (sdram_pll_c2_clk),                          //                 clk.clk
-		.reset_n    (~rst_controller_001_reset_out_reset),       //               reset.reset_n
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
 		.address    (mm_interconnect_0_otg_hpi_w_s1_address),    //                  s1.address
 		.write_n    (~mm_interconnect_0_otg_hpi_w_s1_write),     //                    .write_n
 		.writedata  (mm_interconnect_0_otg_hpi_w_s1_writedata),  //                    .writedata
@@ -250,7 +338,7 @@ module final_project_soc (
 
 	final_project_soc_sdram sdram (
 		.clk            (sdram_pll_c2_clk),                         //   clk.clk
-		.reset_n        (~rst_controller_001_reset_out_reset),      // reset.reset_n
+		.reset_n        (~rst_controller_reset_out_reset),          // reset.reset_n
 		.az_addr        (mm_interconnect_0_sdram_s1_address),       //    s1.address
 		.az_be_n        (~mm_interconnect_0_sdram_s1_byteenable),   //      .byteenable_n
 		.az_cs          (mm_interconnect_0_sdram_s1_chipselect),    //      .chipselect
@@ -299,14 +387,14 @@ module final_project_soc (
 
 	final_project_soc_sysid_qsys_0 sysid_qsys_0 (
 		.clock    (sdram_pll_c2_clk),                                      //           clk.clk
-		.reset_n  (~rst_controller_001_reset_out_reset),                   //         reset.reset_n
+		.reset_n  (~rst_controller_reset_out_reset),                       //         reset.reset_n
 		.readdata (mm_interconnect_0_sysid_qsys_0_control_slave_readdata), // control_slave.readdata
 		.address  (mm_interconnect_0_sysid_qsys_0_control_slave_address)   //              .address
 	);
 
 	final_project_soc_timer_0 timer_0 (
 		.clk        (sdram_pll_c2_clk),                        //   clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),         // reset.reset_n
+		.reset_n    (~rst_controller_001_reset_out_reset),     // reset.reset_n
 		.address    (mm_interconnect_0_timer_0_s1_address),    //    s1.address
 		.writedata  (mm_interconnect_0_timer_0_s1_writedata),  //      .writedata
 		.readdata   (mm_interconnect_0_timer_0_s1_readdata),   //      .readdata
@@ -318,8 +406,8 @@ module final_project_soc (
 	final_project_soc_mm_interconnect_0 mm_interconnect_0 (
 		.clk_0_clk_clk                                               (clk_clk),                                                     //                                             clk_0_clk.clk
 		.sdram_pll_c2_clk                                            (sdram_pll_c2_clk),                                            //                                          sdram_pll_c2.clk
-		.jtag_uart_0_reset_reset_bridge_in_reset_reset               (rst_controller_reset_out_reset),                              //               jtag_uart_0_reset_reset_bridge_in_reset.reset
-		.nios2_gen2_0_reset_reset_bridge_in_reset_reset              (rst_controller_001_reset_out_reset),                          //              nios2_gen2_0_reset_reset_bridge_in_reset.reset
+		.jtag_uart_0_reset_reset_bridge_in_reset_reset               (rst_controller_001_reset_out_reset),                          //               jtag_uart_0_reset_reset_bridge_in_reset.reset
+		.nios2_gen2_0_reset_reset_bridge_in_reset_reset              (rst_controller_reset_out_reset),                              //              nios2_gen2_0_reset_reset_bridge_in_reset.reset
 		.sdram_pll_inclk_interface_reset_reset_bridge_in_reset_reset (rst_controller_002_reset_out_reset),                          // sdram_pll_inclk_interface_reset_reset_bridge_in_reset.reset
 		.nios2_gen2_0_data_master_address                            (nios2_gen2_0_data_master_address),                            //                              nios2_gen2_0_data_master.address
 		.nios2_gen2_0_data_master_waitrequest                        (nios2_gen2_0_data_master_waitrequest),                        //                                                      .waitrequest
@@ -335,6 +423,13 @@ module final_project_soc (
 		.nios2_gen2_0_instruction_master_read                        (nios2_gen2_0_instruction_master_read),                        //                                                      .read
 		.nios2_gen2_0_instruction_master_readdata                    (nios2_gen2_0_instruction_master_readdata),                    //                                                      .readdata
 		.nios2_gen2_0_instruction_master_readdatavalid               (nios2_gen2_0_instruction_master_readdatavalid),               //                                                      .readdatavalid
+		.Color_Palette_0_avalon_slave_0_address                      (mm_interconnect_0_color_palette_0_avalon_slave_0_address),    //                        Color_Palette_0_avalon_slave_0.address
+		.Color_Palette_0_avalon_slave_0_write                        (mm_interconnect_0_color_palette_0_avalon_slave_0_write),      //                                                      .write
+		.Color_Palette_0_avalon_slave_0_read                         (mm_interconnect_0_color_palette_0_avalon_slave_0_read),       //                                                      .read
+		.Color_Palette_0_avalon_slave_0_readdata                     (mm_interconnect_0_color_palette_0_avalon_slave_0_readdata),   //                                                      .readdata
+		.Color_Palette_0_avalon_slave_0_writedata                    (mm_interconnect_0_color_palette_0_avalon_slave_0_writedata),  //                                                      .writedata
+		.Color_Palette_0_avalon_slave_0_byteenable                   (mm_interconnect_0_color_palette_0_avalon_slave_0_byteenable), //                                                      .byteenable
+		.Color_Palette_0_avalon_slave_0_chipselect                   (mm_interconnect_0_color_palette_0_avalon_slave_0_chipselect), //                                                      .chipselect
 		.jtag_uart_0_avalon_jtag_slave_address                       (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_address),     //                         jtag_uart_0_avalon_jtag_slave.address
 		.jtag_uart_0_avalon_jtag_slave_write                         (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write),       //                                                      .write
 		.jtag_uart_0_avalon_jtag_slave_read                          (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read),        //                                                      .read
@@ -401,8 +496,22 @@ module final_project_soc (
 		.sdram_pll_pll_slave_read                                    (mm_interconnect_0_sdram_pll_pll_slave_read),                  //                                                      .read
 		.sdram_pll_pll_slave_readdata                                (mm_interconnect_0_sdram_pll_pll_slave_readdata),              //                                                      .readdata
 		.sdram_pll_pll_slave_writedata                               (mm_interconnect_0_sdram_pll_pll_slave_writedata),             //                                                      .writedata
+		.Sprite_RAM_0_avalon_slave_0_address                         (mm_interconnect_0_sprite_ram_0_avalon_slave_0_address),       //                           Sprite_RAM_0_avalon_slave_0.address
+		.Sprite_RAM_0_avalon_slave_0_write                           (mm_interconnect_0_sprite_ram_0_avalon_slave_0_write),         //                                                      .write
+		.Sprite_RAM_0_avalon_slave_0_read                            (mm_interconnect_0_sprite_ram_0_avalon_slave_0_read),          //                                                      .read
+		.Sprite_RAM_0_avalon_slave_0_readdata                        (mm_interconnect_0_sprite_ram_0_avalon_slave_0_readdata),      //                                                      .readdata
+		.Sprite_RAM_0_avalon_slave_0_writedata                       (mm_interconnect_0_sprite_ram_0_avalon_slave_0_writedata),     //                                                      .writedata
+		.Sprite_RAM_0_avalon_slave_0_byteenable                      (mm_interconnect_0_sprite_ram_0_avalon_slave_0_byteenable),    //                                                      .byteenable
+		.Sprite_RAM_0_avalon_slave_0_chipselect                      (mm_interconnect_0_sprite_ram_0_avalon_slave_0_chipselect),    //                                                      .chipselect
 		.sysid_qsys_0_control_slave_address                          (mm_interconnect_0_sysid_qsys_0_control_slave_address),        //                            sysid_qsys_0_control_slave.address
 		.sysid_qsys_0_control_slave_readdata                         (mm_interconnect_0_sysid_qsys_0_control_slave_readdata),       //                                                      .readdata
+		.Tile_Table_0_avalon_slave_address                           (mm_interconnect_0_tile_table_0_avalon_slave_address),         //                             Tile_Table_0_avalon_slave.address
+		.Tile_Table_0_avalon_slave_write                             (mm_interconnect_0_tile_table_0_avalon_slave_write),           //                                                      .write
+		.Tile_Table_0_avalon_slave_read                              (mm_interconnect_0_tile_table_0_avalon_slave_read),            //                                                      .read
+		.Tile_Table_0_avalon_slave_readdata                          (mm_interconnect_0_tile_table_0_avalon_slave_readdata),        //                                                      .readdata
+		.Tile_Table_0_avalon_slave_writedata                         (mm_interconnect_0_tile_table_0_avalon_slave_writedata),       //                                                      .writedata
+		.Tile_Table_0_avalon_slave_byteenable                        (mm_interconnect_0_tile_table_0_avalon_slave_byteenable),      //                                                      .byteenable
+		.Tile_Table_0_avalon_slave_chipselect                        (mm_interconnect_0_tile_table_0_avalon_slave_chipselect),      //                                                      .chipselect
 		.timer_0_s1_address                                          (mm_interconnect_0_timer_0_s1_address),                        //                                            timer_0_s1.address
 		.timer_0_s1_write                                            (mm_interconnect_0_timer_0_s1_write),                          //                                                      .write
 		.timer_0_s1_readdata                                         (mm_interconnect_0_timer_0_s1_readdata),                       //                                                      .readdata
@@ -411,74 +520,11 @@ module final_project_soc (
 	);
 
 	final_project_soc_irq_mapper irq_mapper (
-		.clk           (sdram_pll_c2_clk),                   //       clk.clk
-		.reset         (rst_controller_001_reset_out_reset), // clk_reset.reset
-		.receiver0_irq (irq_mapper_receiver0_irq),           // receiver0.irq
-		.receiver1_irq (irq_mapper_receiver1_irq),           // receiver1.irq
-		.sender_irq    (nios2_gen2_0_irq_irq)                //    sender.irq
-	);
-
-	altera_reset_controller #(
-		.NUM_RESET_INPUTS          (1),
-		.OUTPUT_RESET_SYNC_EDGES   ("deassert"),
-		.SYNC_DEPTH                (2),
-		.RESET_REQUEST_PRESENT     (0),
-		.RESET_REQ_WAIT_TIME       (1),
-		.MIN_RST_ASSERTION_TIME    (3),
-		.RESET_REQ_EARLY_DSRT_TIME (1),
-		.USE_RESET_REQUEST_IN0     (0),
-		.USE_RESET_REQUEST_IN1     (0),
-		.USE_RESET_REQUEST_IN2     (0),
-		.USE_RESET_REQUEST_IN3     (0),
-		.USE_RESET_REQUEST_IN4     (0),
-		.USE_RESET_REQUEST_IN5     (0),
-		.USE_RESET_REQUEST_IN6     (0),
-		.USE_RESET_REQUEST_IN7     (0),
-		.USE_RESET_REQUEST_IN8     (0),
-		.USE_RESET_REQUEST_IN9     (0),
-		.USE_RESET_REQUEST_IN10    (0),
-		.USE_RESET_REQUEST_IN11    (0),
-		.USE_RESET_REQUEST_IN12    (0),
-		.USE_RESET_REQUEST_IN13    (0),
-		.USE_RESET_REQUEST_IN14    (0),
-		.USE_RESET_REQUEST_IN15    (0),
-		.ADAPT_RESET_REQUEST       (0)
-	) rst_controller (
-		.reset_in0      (~reset_reset_n),                 // reset_in0.reset
-		.clk            (sdram_pll_c2_clk),               //       clk.clk
-		.reset_out      (rst_controller_reset_out_reset), // reset_out.reset
-		.reset_req      (),                               // (terminated)
-		.reset_req_in0  (1'b0),                           // (terminated)
-		.reset_in1      (1'b0),                           // (terminated)
-		.reset_req_in1  (1'b0),                           // (terminated)
-		.reset_in2      (1'b0),                           // (terminated)
-		.reset_req_in2  (1'b0),                           // (terminated)
-		.reset_in3      (1'b0),                           // (terminated)
-		.reset_req_in3  (1'b0),                           // (terminated)
-		.reset_in4      (1'b0),                           // (terminated)
-		.reset_req_in4  (1'b0),                           // (terminated)
-		.reset_in5      (1'b0),                           // (terminated)
-		.reset_req_in5  (1'b0),                           // (terminated)
-		.reset_in6      (1'b0),                           // (terminated)
-		.reset_req_in6  (1'b0),                           // (terminated)
-		.reset_in7      (1'b0),                           // (terminated)
-		.reset_req_in7  (1'b0),                           // (terminated)
-		.reset_in8      (1'b0),                           // (terminated)
-		.reset_req_in8  (1'b0),                           // (terminated)
-		.reset_in9      (1'b0),                           // (terminated)
-		.reset_req_in9  (1'b0),                           // (terminated)
-		.reset_in10     (1'b0),                           // (terminated)
-		.reset_req_in10 (1'b0),                           // (terminated)
-		.reset_in11     (1'b0),                           // (terminated)
-		.reset_req_in11 (1'b0),                           // (terminated)
-		.reset_in12     (1'b0),                           // (terminated)
-		.reset_req_in12 (1'b0),                           // (terminated)
-		.reset_in13     (1'b0),                           // (terminated)
-		.reset_req_in13 (1'b0),                           // (terminated)
-		.reset_in14     (1'b0),                           // (terminated)
-		.reset_req_in14 (1'b0),                           // (terminated)
-		.reset_in15     (1'b0),                           // (terminated)
-		.reset_req_in15 (1'b0)                            // (terminated)
+		.clk           (sdram_pll_c2_clk),               //       clk.clk
+		.reset         (rst_controller_reset_out_reset), // clk_reset.reset
+		.receiver0_irq (irq_mapper_receiver0_irq),       // receiver0.irq
+		.receiver1_irq (irq_mapper_receiver1_irq),       // receiver1.irq
+		.sender_irq    (nios2_gen2_0_irq_irq)            //    sender.irq
 	);
 
 	altera_reset_controller #(
@@ -506,12 +552,12 @@ module final_project_soc (
 		.USE_RESET_REQUEST_IN14    (0),
 		.USE_RESET_REQUEST_IN15    (0),
 		.ADAPT_RESET_REQUEST       (0)
-	) rst_controller_001 (
+	) rst_controller (
 		.reset_in0      (~reset_reset_n),                         // reset_in0.reset
 		.reset_in1      (nios2_gen2_0_debug_reset_request_reset), // reset_in1.reset
 		.clk            (sdram_pll_c2_clk),                       //       clk.clk
-		.reset_out      (rst_controller_001_reset_out_reset),     // reset_out.reset
-		.reset_req      (rst_controller_001_reset_out_reset_req), //          .reset_req
+		.reset_out      (rst_controller_reset_out_reset),         // reset_out.reset
+		.reset_req      (rst_controller_reset_out_reset_req),     //          .reset_req
 		.reset_req_in0  (1'b0),                                   // (terminated)
 		.reset_req_in1  (1'b0),                                   // (terminated)
 		.reset_in2      (1'b0),                                   // (terminated)
@@ -542,6 +588,69 @@ module final_project_soc (
 		.reset_req_in14 (1'b0),                                   // (terminated)
 		.reset_in15     (1'b0),                                   // (terminated)
 		.reset_req_in15 (1'b0)                                    // (terminated)
+	);
+
+	altera_reset_controller #(
+		.NUM_RESET_INPUTS          (1),
+		.OUTPUT_RESET_SYNC_EDGES   ("deassert"),
+		.SYNC_DEPTH                (2),
+		.RESET_REQUEST_PRESENT     (0),
+		.RESET_REQ_WAIT_TIME       (1),
+		.MIN_RST_ASSERTION_TIME    (3),
+		.RESET_REQ_EARLY_DSRT_TIME (1),
+		.USE_RESET_REQUEST_IN0     (0),
+		.USE_RESET_REQUEST_IN1     (0),
+		.USE_RESET_REQUEST_IN2     (0),
+		.USE_RESET_REQUEST_IN3     (0),
+		.USE_RESET_REQUEST_IN4     (0),
+		.USE_RESET_REQUEST_IN5     (0),
+		.USE_RESET_REQUEST_IN6     (0),
+		.USE_RESET_REQUEST_IN7     (0),
+		.USE_RESET_REQUEST_IN8     (0),
+		.USE_RESET_REQUEST_IN9     (0),
+		.USE_RESET_REQUEST_IN10    (0),
+		.USE_RESET_REQUEST_IN11    (0),
+		.USE_RESET_REQUEST_IN12    (0),
+		.USE_RESET_REQUEST_IN13    (0),
+		.USE_RESET_REQUEST_IN14    (0),
+		.USE_RESET_REQUEST_IN15    (0),
+		.ADAPT_RESET_REQUEST       (0)
+	) rst_controller_001 (
+		.reset_in0      (~reset_reset_n),                     // reset_in0.reset
+		.clk            (sdram_pll_c2_clk),                   //       clk.clk
+		.reset_out      (rst_controller_001_reset_out_reset), // reset_out.reset
+		.reset_req      (),                                   // (terminated)
+		.reset_req_in0  (1'b0),                               // (terminated)
+		.reset_in1      (1'b0),                               // (terminated)
+		.reset_req_in1  (1'b0),                               // (terminated)
+		.reset_in2      (1'b0),                               // (terminated)
+		.reset_req_in2  (1'b0),                               // (terminated)
+		.reset_in3      (1'b0),                               // (terminated)
+		.reset_req_in3  (1'b0),                               // (terminated)
+		.reset_in4      (1'b0),                               // (terminated)
+		.reset_req_in4  (1'b0),                               // (terminated)
+		.reset_in5      (1'b0),                               // (terminated)
+		.reset_req_in5  (1'b0),                               // (terminated)
+		.reset_in6      (1'b0),                               // (terminated)
+		.reset_req_in6  (1'b0),                               // (terminated)
+		.reset_in7      (1'b0),                               // (terminated)
+		.reset_req_in7  (1'b0),                               // (terminated)
+		.reset_in8      (1'b0),                               // (terminated)
+		.reset_req_in8  (1'b0),                               // (terminated)
+		.reset_in9      (1'b0),                               // (terminated)
+		.reset_req_in9  (1'b0),                               // (terminated)
+		.reset_in10     (1'b0),                               // (terminated)
+		.reset_req_in10 (1'b0),                               // (terminated)
+		.reset_in11     (1'b0),                               // (terminated)
+		.reset_req_in11 (1'b0),                               // (terminated)
+		.reset_in12     (1'b0),                               // (terminated)
+		.reset_req_in12 (1'b0),                               // (terminated)
+		.reset_in13     (1'b0),                               // (terminated)
+		.reset_req_in13 (1'b0),                               // (terminated)
+		.reset_in14     (1'b0),                               // (terminated)
+		.reset_req_in14 (1'b0),                               // (terminated)
+		.reset_in15     (1'b0),                               // (terminated)
+		.reset_req_in15 (1'b0)                                // (terminated)
 	);
 
 	altera_reset_controller #(

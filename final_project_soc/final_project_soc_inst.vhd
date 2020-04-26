@@ -19,7 +19,12 @@
 			sdram_wire_dq     : inout std_logic_vector(31 downto 0) := (others => 'X'); -- dq
 			sdram_wire_dqm    : out   std_logic_vector(3 downto 0);                     -- dqm
 			sdram_wire_ras_n  : out   std_logic;                                        -- ras_n
-			sdram_wire_we_n   : out   std_logic                                         -- we_n
+			sdram_wire_we_n   : out   std_logic;                                        -- we_n
+			tt_cm_b_export    : out   std_logic_vector(7 downto 0);                     -- export
+			tt_cm_g_export    : out   std_logic_vector(7 downto 0);                     -- export
+			tt_cm_r_export    : out   std_logic_vector(7 downto 0);                     -- export
+			tt_cm_x_export    : in    std_logic_vector(9 downto 0)  := (others => 'X'); -- export
+			tt_cm_y_export    : in    std_logic_vector(9 downto 0)  := (others => 'X')  -- export
 		);
 	end component final_project_soc;
 
@@ -44,6 +49,11 @@
 			sdram_wire_dq     => CONNECTED_TO_sdram_wire_dq,     --             .dq
 			sdram_wire_dqm    => CONNECTED_TO_sdram_wire_dqm,    --             .dqm
 			sdram_wire_ras_n  => CONNECTED_TO_sdram_wire_ras_n,  --             .ras_n
-			sdram_wire_we_n   => CONNECTED_TO_sdram_wire_we_n    --             .we_n
+			sdram_wire_we_n   => CONNECTED_TO_sdram_wire_we_n,   --             .we_n
+			tt_cm_b_export    => CONNECTED_TO_tt_cm_b_export,    --      tt_cm_b.export
+			tt_cm_g_export    => CONNECTED_TO_tt_cm_g_export,    --      tt_cm_g.export
+			tt_cm_r_export    => CONNECTED_TO_tt_cm_r_export,    --      tt_cm_r.export
+			tt_cm_x_export    => CONNECTED_TO_tt_cm_x_export,    --      tt_cm_x.export
+			tt_cm_y_export    => CONNECTED_TO_tt_cm_y_export     --      tt_cm_y.export
 		);
 

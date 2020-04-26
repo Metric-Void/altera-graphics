@@ -19,7 +19,12 @@ module final_project_soc (
 	sdram_wire_dq,
 	sdram_wire_dqm,
 	sdram_wire_ras_n,
-	sdram_wire_we_n);	
+	sdram_wire_we_n,
+	tt_cm_b_export,
+	tt_cm_g_export,
+	tt_cm_r_export,
+	tt_cm_x_export,
+	tt_cm_y_export);	
 
 	input		clk_clk;
 	output	[1:0]	hpi_addr_export;
@@ -41,4 +46,9 @@ module final_project_soc (
 	output	[3:0]	sdram_wire_dqm;
 	output		sdram_wire_ras_n;
 	output		sdram_wire_we_n;
+	output	[7:0]	tt_cm_b_export;
+	output	[7:0]	tt_cm_g_export;
+	output	[7:0]	tt_cm_r_export;
+	input	[9:0]	tt_cm_x_export;
+	input	[9:0]	tt_cm_y_export;
 endmodule

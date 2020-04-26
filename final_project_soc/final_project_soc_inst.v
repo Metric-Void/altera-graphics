@@ -18,6 +18,11 @@
 		.sdram_wire_dq     (<connected-to-sdram_wire_dq>),     //             .dq
 		.sdram_wire_dqm    (<connected-to-sdram_wire_dqm>),    //             .dqm
 		.sdram_wire_ras_n  (<connected-to-sdram_wire_ras_n>),  //             .ras_n
-		.sdram_wire_we_n   (<connected-to-sdram_wire_we_n>)    //             .we_n
+		.sdram_wire_we_n   (<connected-to-sdram_wire_we_n>),   //             .we_n
+		.tt_cm_b_export    (<connected-to-tt_cm_b_export>),    //      tt_cm_b.export
+		.tt_cm_g_export    (<connected-to-tt_cm_g_export>),    //      tt_cm_g.export
+		.tt_cm_r_export    (<connected-to-tt_cm_r_export>),    //      tt_cm_r.export
+		.tt_cm_x_export    (<connected-to-tt_cm_x_export>),    //      tt_cm_x.export
+		.tt_cm_y_export    (<connected-to-tt_cm_y_export>)     //      tt_cm_y.export
 	);
 
