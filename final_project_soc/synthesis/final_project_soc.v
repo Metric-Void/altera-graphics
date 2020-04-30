@@ -75,7 +75,7 @@ module final_project_soc (
 	wire  [31:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_writedata;     // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_writedata -> Sprite_RAM_0:AVL_WRITEDATA
 	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_chipselect; // mm_interconnect_0:Color_Palette_0_avalon_slave_0_chipselect -> Color_Palette_0:AVL_CS
 	wire  [31:0] mm_interconnect_0_color_palette_0_avalon_slave_0_readdata;   // Color_Palette_0:AVL_READDATA -> mm_interconnect_0:Color_Palette_0_avalon_slave_0_readdata
-	wire   [2:0] mm_interconnect_0_color_palette_0_avalon_slave_0_address;    // mm_interconnect_0:Color_Palette_0_avalon_slave_0_address -> Color_Palette_0:AVL_ADDR
+	wire   [4:0] mm_interconnect_0_color_palette_0_avalon_slave_0_address;    // mm_interconnect_0:Color_Palette_0_avalon_slave_0_address -> Color_Palette_0:AVL_ADDR
 	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_read;       // mm_interconnect_0:Color_Palette_0_avalon_slave_0_read -> Color_Palette_0:AVL_READ
 	wire   [3:0] mm_interconnect_0_color_palette_0_avalon_slave_0_byteenable; // mm_interconnect_0:Color_Palette_0_avalon_slave_0_byteenable -> Color_Palette_0:AVL_BYTE_EN
 	wire         mm_interconnect_0_color_palette_0_avalon_slave_0_write;      // mm_interconnect_0:Color_Palette_0_avalon_slave_0_write -> Color_Palette_0:AVL_WRITE

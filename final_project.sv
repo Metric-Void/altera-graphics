@@ -53,7 +53,12 @@ final_project_soc fp_system (
 	.hpi_data_out_port(hpi_data_out), 			// hpi_data_out.export
 	.hpi_r_export(hpi_r),        					// hpi_r.export
 	.hpi_reset_export(hpi_reset),    			// hpi_reset.export
-	.hpi_w_export(hpi_w)        					// hpi_w.export
+	.hpi_w_export(hpi_w),        					// hpi_w.export
+	.tt_cm_x_export(DrawX),
+	.tt_cm_y_export(DrawY),
+	.tt_cm_r_export(VGA_R),
+	.tt_cm_g_export(VGA_G),
+	.tt_cm_b_export(VGA_B)
 );
 
 // HPI Interface from lab 8.
@@ -85,11 +90,5 @@ VGA_controller screen_vga0(
 	.VGA_HS, .VGA_VS, .VGA_CLK, .VGA_BLANK_N, .VGA_SYNC_N,
 	.DrawX, .DrawY
 );
-	
-color_mapper cmap0(
-	.DrawX, .DrawY,
-	.VGA_R, .VGA_G, .VGA_B
-);
-
 
 endmodule

@@ -131,8 +131,8 @@ module sprite_ram(
 				if(regaddr>127) begin
 					case(sprite_line)
 						3'b000: AVL_READDATA = regfile[regaddr][31:0];
-						3'b001: AVL_READDATA = regfile[regaddr][63:31];
-						3'b010: AVL_READDATA = regfile[regaddr][95:32];
+						3'b001: AVL_READDATA = regfile[regaddr][63:32];
+						3'b010: AVL_READDATA = regfile[regaddr][95:64];
 						3'b011: AVL_READDATA = regfile[regaddr][127:96];
 						3'b100: AVL_READDATA = regfile[regaddr][159:128];
 						3'b101: AVL_READDATA = regfile[regaddr][191:160];
@@ -149,19 +149,19 @@ module sprite_ram(
 	wire [31:0] get_data_p;
 	
 	logic [7:0] raw_rom;
-	logic [15:0] rom_expand;
+	wire [15:0] rom_expand;
 	
-	logic [10:0] from_addr = {get_index[6:0], get_line};
+	// logic [10:0] from_addr = {get_index[6:0], get_line};
 	
 	font_rom from0(
-		.addr(from_addr),
+		.addr({get_index[6:0], get_line}),
 		.data(raw_rom)
 	);
 	
 	always_comb begin
-		for(int i=0; i<15;i++) begin
-			assign rom_expand[i*2] = raw_rom[i];
-			assign rom_expand[i*2+1] = raw_rom[i];
+		for(int i=0; i<=7;i++) begin
+			rom_expand[i*2] = raw_rom[i];
+			rom_expand[i*2+1] = raw_rom[i];
 		end
 	end
 	
@@ -169,14 +169,14 @@ module sprite_ram(
 		// Being lazy here. Copy and re-switch
 		if(get_index[7]) begin		// High Index. Sprite RAM.
 			case(get_line[2:0])
-				3'b000: get_data_p = regfile[regaddr][31:0];
-				3'b001: get_data_p = regfile[regaddr][63:31];
-				3'b010: get_data_p = regfile[regaddr][95:32];
-				3'b011: get_data_p = regfile[regaddr][127:96];
-				3'b100: get_data_p = regfile[regaddr][159:128];
-				3'b101: get_data_p = regfile[regaddr][191:160];
-				3'b110: get_data_p = regfile[regaddr][223:192];
-				3'b111: get_data_p = regfile[regaddr][255:224];
+				3'b000: get_data_p = regfile[get_index[6:0]][31:0];
+				3'b001: get_data_p = regfile[get_index[6:0]][63:32];
+				3'b010: get_data_p = regfile[get_index[6:0]][95:64];
+				3'b011: get_data_p = regfile[get_index[6:0]][127:96];
+				3'b100: get_data_p = regfile[get_index[6:0]][159:128];
+				3'b101: get_data_p = regfile[get_index[6:0]][191:160];
+				3'b110: get_data_p = regfile[get_index[6:0]][223:192];
+				3'b111: get_data_p = regfile[get_index[6:0]][255:224];
 			endcase
 			if(get_line[3]) begin
 				// High. Rear bits
@@ -186,6 +186,7 @@ module sprite_ram(
 				get_data = get_data_p[15:0];
 			end
 		end else begin			// Low index. Font ROM.
+			get_data_p = 32'bX;
 			get_data = rom_expand;
 		end
 	end

@@ -26,7 +26,7 @@ module final_project_soc_mm_interconnect_0 (
 		input  wire        nios2_gen2_0_instruction_master_read,                        //                                                      .read
 		output wire [31:0] nios2_gen2_0_instruction_master_readdata,                    //                                                      .readdata
 		output wire        nios2_gen2_0_instruction_master_readdatavalid,               //                                                      .readdatavalid
-		output wire [2:0]  Color_Palette_0_avalon_slave_0_address,                      //                        Color_Palette_0_avalon_slave_0.address
+		output wire [4:0]  Color_Palette_0_avalon_slave_0_address,                      //                        Color_Palette_0_avalon_slave_0.address
 		output wire        Color_Palette_0_avalon_slave_0_write,                        //                                                      .write
 		output wire        Color_Palette_0_avalon_slave_0_read,                         //                                                      .read
 		input  wire [31:0] Color_Palette_0_avalon_slave_0_readdata,                     //                                                      .readdata
@@ -1515,7 +1515,7 @@ module final_project_soc_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (3),
+		.AV_ADDRESS_W                   (5),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),
