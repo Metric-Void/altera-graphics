@@ -11,6 +11,7 @@ incremental_db/
 db/
 output_files/
 RemoteSystemsTempFiles/
+simulation/
 
 # Ignore backup files
 *.bak

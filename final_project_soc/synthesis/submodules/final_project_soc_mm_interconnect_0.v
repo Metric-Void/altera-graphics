@@ -108,7 +108,7 @@ module final_project_soc_mm_interconnect_0 (
 		output wire        Sprite_RAM_0_avalon_slave_0_chipselect,                      //                                                      .chipselect
 		output wire [0:0]  sysid_qsys_0_control_slave_address,                          //                            sysid_qsys_0_control_slave.address
 		input  wire [31:0] sysid_qsys_0_control_slave_readdata,                         //                                                      .readdata
-		output wire [13:0] Tile_Table_0_avalon_slave_address,                           //                             Tile_Table_0_avalon_slave.address
+		output wire [12:0] Tile_Table_0_avalon_slave_address,                           //                             Tile_Table_0_avalon_slave.address
 		output wire        Tile_Table_0_avalon_slave_write,                             //                                                      .write
 		output wire        Tile_Table_0_avalon_slave_read,                              //                                                      .read
 		input  wire [31:0] Tile_Table_0_avalon_slave_readdata,                          //                                                      .readdata
@@ -1387,7 +1387,7 @@ module final_project_soc_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (14),
+		.AV_ADDRESS_W                   (13),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),
@@ -1410,7 +1410,7 @@ module final_project_soc_mm_interconnect_0 (
 		.CHIPSELECT_THROUGH_READLATENCY (0),
 		.AV_READ_WAIT_CYCLES            (1),
 		.AV_WRITE_WAIT_CYCLES           (0),
-		.AV_SETUP_WAIT_CYCLES           (0),
+		.AV_SETUP_WAIT_CYCLES           (1),
 		.AV_DATA_HOLD_CYCLES            (0)
 	) tile_table_0_avalon_slave_translator (
 		.clk                    (sdram_pll_c2_clk),                                 //                      clk.clk
@@ -1474,7 +1474,7 @@ module final_project_soc_mm_interconnect_0 (
 		.CHIPSELECT_THROUGH_READLATENCY (0),
 		.AV_READ_WAIT_CYCLES            (1),
 		.AV_WRITE_WAIT_CYCLES           (0),
-		.AV_SETUP_WAIT_CYCLES           (0),
+		.AV_SETUP_WAIT_CYCLES           (1),
 		.AV_DATA_HOLD_CYCLES            (0)
 	) sprite_ram_0_avalon_slave_0_translator (
 		.clk                    (sdram_pll_c2_clk),                                   //                      clk.clk
@@ -1536,7 +1536,7 @@ module final_project_soc_mm_interconnect_0 (
 		.UAV_CONSTANT_BURST_BEHAVIOR    (0),
 		.AV_REQUIRE_UNALIGNED_ADDRESSES (0),
 		.CHIPSELECT_THROUGH_READLATENCY (0),
-		.AV_READ_WAIT_CYCLES            (1),
+		.AV_READ_WAIT_CYCLES            (0),
 		.AV_WRITE_WAIT_CYCLES           (0),
 		.AV_SETUP_WAIT_CYCLES           (0),
 		.AV_DATA_HOLD_CYCLES            (0)

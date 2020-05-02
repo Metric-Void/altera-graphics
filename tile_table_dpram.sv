@@ -19,8 +19,8 @@ module tile_table_dpram
 	input [ADDRESS_WIDTH-1:0] addr2,
 	input [BYTES-1:0] be1,
 	input [BYTES-1:0] be2,
-	input [BYTE_WIDTH-1:0] data_in1, 
-	input [BYTE_WIDTH-1:0] data_in2, 
+	input [DATA_WIDTH_R-1:0] data_in1, 
+	input [DATA_WIDTH_R-1:0] data_in2, 
 	input we1, we2, clk,
 	output [DATA_WIDTH_R-1:0] data_out1,
 	output [DATA_WIDTH_R-1:0] data_out2);
@@ -37,8 +37,8 @@ module tile_table_dpram
 	begin
 		if(we1) begin
 		// edit this code if using other than four bytes per word
-			if(be1[0]) ram[addr1][0] <= data_in1;
-			if(be1[1]) ram[addr1][1] <= data_in1;
+			if(be1[0]) ram[addr1][0] <= data_in1[BYTE_WIDTH-1:0];
+			if(be1[1]) ram[addr1][1] <= data_in1[DATA_WIDTH_R-1:BYTE_WIDTH];
 		end
 	data_reg1 <= ram[addr1];
 	end
@@ -50,10 +50,10 @@ module tile_table_dpram
 	begin
 		if(we2) begin
 		// edit this code if using other than four bytes per word
-			if(be2[0]) ram[addr2][0] <= data_in2;
-			if(be2[1]) ram[addr2][1] <= data_in2;
+			if(be2[0]) ram[addr2][0] <= data_in2[BYTE_WIDTH-1:0];
+			if(be2[1]) ram[addr2][1] <= data_in2[DATA_WIDTH_R-1:BYTE_WIDTH];
 		end
-	data_reg2 <= ram[addr2];
+		data_reg2 <= ram[addr2];
 	end
 
 	assign data_out2 = data_reg2;

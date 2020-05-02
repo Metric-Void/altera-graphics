@@ -8,11 +8,13 @@ The tile to write to/read from is indicated by 0xABCD.
 Since 30 = 1E = 0001 1110, 12:0 will be enough. (13 bits)
 
 Data is 11 bits. [7:0] indicates pattern index, [10:8] indicates palette.
+
+DrawX is horizontal (Width), DrawY is vertical(height).
 ***********************************************/
 module tile_table (
 	input logic CLK_100, CLK_50, RESET,
 	// Avalon-MM interface.
-	input		logic	[13:0]	AVL_ADDR,
+	input		logic	[12:0]	AVL_ADDR,
 	input		logic				AVL_READ, AVL_WRITE, AVL_CS,
 	input		logic	[31:0]	AVL_WRITEDATA,
 	input		logic	[3:0]		AVL_BYTE_EN,
@@ -83,15 +85,6 @@ module tile_table (
 	
 	// This block handles the Avalon-MM interface.
 	always_comb begin
-//		if(AVL_CS) begin
-//			if(AVL_WRITE) begin
-//				if(AVL_BYTE_EN[0]) tiles[addr_change][7:0] = AVL_WRITEDATA[7:0];
-//				if(AVL_BYTE_EN[1]) tiles[addr_change][10:8] = AVL_WRITEDATA[10:8];
-//			end else if (AVL_READ) begin
-//				AVL_READDATA = {{21{1'b0}}, tiles[addr_change]};
-//			end
-//		end
-		
 		// Get the corresponding pattern from sprite_ram.
 		// get_index = tiles[get_addr_change][7:0];	// The current pattern.
 		
@@ -107,7 +100,7 @@ module tile_table (
 		// Now get_data is filled with a line. Check remain_x. Get the color
 		// Each pixel occupy 2 bits.
 		// palette = tiles[get_addr_change][10:8];
-		color_index = sprite_line_read[remain_x];
+		color_index = sprite_line_read[7-remain_x];
 		
 		VGA_RED = rgb[23:16];
 		VGA_GREEN = rgb[15:8];

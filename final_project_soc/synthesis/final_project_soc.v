@@ -61,7 +61,7 @@ module final_project_soc (
 	wire  [31:0] mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata;   // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_chipselect;      // mm_interconnect_0:Tile_Table_0_avalon_slave_chipselect -> Tile_Table_0:AVL_CS
 	wire  [31:0] mm_interconnect_0_tile_table_0_avalon_slave_readdata;        // Tile_Table_0:AVL_READDATA -> mm_interconnect_0:Tile_Table_0_avalon_slave_readdata
-	wire  [13:0] mm_interconnect_0_tile_table_0_avalon_slave_address;         // mm_interconnect_0:Tile_Table_0_avalon_slave_address -> Tile_Table_0:AVL_ADDR
+	wire  [12:0] mm_interconnect_0_tile_table_0_avalon_slave_address;         // mm_interconnect_0:Tile_Table_0_avalon_slave_address -> Tile_Table_0:AVL_ADDR
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_read;            // mm_interconnect_0:Tile_Table_0_avalon_slave_read -> Tile_Table_0:AVL_READ
 	wire   [3:0] mm_interconnect_0_tile_table_0_avalon_slave_byteenable;      // mm_interconnect_0:Tile_Table_0_avalon_slave_byteenable -> Tile_Table_0:AVL_BYTE_EN
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_write;           // mm_interconnect_0:Tile_Table_0_avalon_slave_write -> Tile_Table_0:AVL_WRITE
