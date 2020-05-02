@@ -99,7 +99,7 @@ module final_project_soc_mm_interconnect_0 (
 		output wire        sdram_pll_pll_slave_read,                                    //                                                      .read
 		input  wire [31:0] sdram_pll_pll_slave_readdata,                                //                                                      .readdata
 		output wire [31:0] sdram_pll_pll_slave_writedata,                               //                                                      .writedata
-		output wire [10:0] Sprite_RAM_0_avalon_slave_0_address,                         //                           Sprite_RAM_0_avalon_slave_0.address
+		output wire [8:0]  Sprite_RAM_0_avalon_slave_0_address,                         //                           Sprite_RAM_0_avalon_slave_0.address
 		output wire        Sprite_RAM_0_avalon_slave_0_write,                           //                                                      .write
 		output wire        Sprite_RAM_0_avalon_slave_0_read,                            //                                                      .read
 		input  wire [31:0] Sprite_RAM_0_avalon_slave_0_readdata,                        //                                                      .readdata
@@ -108,7 +108,7 @@ module final_project_soc_mm_interconnect_0 (
 		output wire        Sprite_RAM_0_avalon_slave_0_chipselect,                      //                                                      .chipselect
 		output wire [0:0]  sysid_qsys_0_control_slave_address,                          //                            sysid_qsys_0_control_slave.address
 		input  wire [31:0] sysid_qsys_0_control_slave_readdata,                         //                                                      .readdata
-		output wire [12:0] Tile_Table_0_avalon_slave_address,                           //                             Tile_Table_0_avalon_slave.address
+		output wire [13:0] Tile_Table_0_avalon_slave_address,                           //                             Tile_Table_0_avalon_slave.address
 		output wire        Tile_Table_0_avalon_slave_write,                             //                                                      .write
 		output wire        Tile_Table_0_avalon_slave_read,                              //                                                      .read
 		input  wire [31:0] Tile_Table_0_avalon_slave_readdata,                          //                                                      .readdata
@@ -1387,7 +1387,7 @@ module final_project_soc_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (13),
+		.AV_ADDRESS_W                   (14),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),
@@ -1451,7 +1451,7 @@ module final_project_soc_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (11),
+		.AV_ADDRESS_W                   (9),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),

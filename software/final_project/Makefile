@@ -90,6 +90,7 @@ C_SRCS += aesop.c
 C_SRCS += io_handler.c
 C_SRCS += main.c
 C_SRCS += usb.c
+C_SRCS += core.c
 CXX_SRCS :=
 ASM_SRCS :=
 

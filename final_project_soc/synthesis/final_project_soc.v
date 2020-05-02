@@ -4,31 +4,31 @@
 
 `timescale 1 ps / 1 ps
 module final_project_soc (
-		input  wire        clk_clk,           //          clk.clk
-		output wire [1:0]  hpi_addr_export,   //     hpi_addr.export
-		output wire        hpi_cs_export,     //       hpi_cs.export
-		input  wire [15:0] hpi_data_in_port,  //     hpi_data.in_port
-		output wire [15:0] hpi_data_out_port, //             .out_port
-		output wire        hpi_r_export,      //        hpi_r.export
-		output wire        hpi_reset_export,  //    hpi_reset.export
-		output wire        hpi_w_export,      //        hpi_w.export
-		input  wire        reset_reset_n,     //        reset.reset_n
-		output wire        sdram_clk_clk,     //    sdram_clk.clk
-		output wire        sdram_clk_50_clk,  // sdram_clk_50.clk
-		output wire [12:0] sdram_wire_addr,   //   sdram_wire.addr
-		output wire [1:0]  sdram_wire_ba,     //             .ba
-		output wire        sdram_wire_cas_n,  //             .cas_n
-		output wire        sdram_wire_cke,    //             .cke
-		output wire        sdram_wire_cs_n,   //             .cs_n
-		inout  wire [31:0] sdram_wire_dq,     //             .dq
-		output wire [3:0]  sdram_wire_dqm,    //             .dqm
-		output wire        sdram_wire_ras_n,  //             .ras_n
-		output wire        sdram_wire_we_n,   //             .we_n
-		output wire [7:0]  tt_cm_b_export,    //      tt_cm_b.export
-		output wire [7:0]  tt_cm_g_export,    //      tt_cm_g.export
-		output wire [7:0]  tt_cm_r_export,    //      tt_cm_r.export
-		input  wire [9:0]  tt_cm_x_export,    //      tt_cm_x.export
-		input  wire [9:0]  tt_cm_y_export     //      tt_cm_y.export
+		input  wire        clk_clk,           //        clk.clk
+		output wire [1:0]  hpi_addr_export,   //   hpi_addr.export
+		output wire        hpi_cs_export,     //     hpi_cs.export
+		input  wire [15:0] hpi_data_in_port,  //   hpi_data.in_port
+		output wire [15:0] hpi_data_out_port, //           .out_port
+		output wire        hpi_r_export,      //      hpi_r.export
+		output wire        hpi_reset_export,  //  hpi_reset.export
+		output wire        hpi_w_export,      //      hpi_w.export
+		input  wire        reset_reset_n,     //      reset.reset_n
+		output wire        sdram_clk_clk,     //  sdram_clk.clk
+		output wire [12:0] sdram_wire_addr,   // sdram_wire.addr
+		output wire [1:0]  sdram_wire_ba,     //           .ba
+		output wire        sdram_wire_cas_n,  //           .cas_n
+		output wire        sdram_wire_cke,    //           .cke
+		output wire        sdram_wire_cs_n,   //           .cs_n
+		inout  wire [31:0] sdram_wire_dq,     //           .dq
+		output wire [3:0]  sdram_wire_dqm,    //           .dqm
+		output wire        sdram_wire_ras_n,  //           .ras_n
+		output wire        sdram_wire_we_n,   //           .we_n
+		output wire [7:0]  tt_cm_b_export,    //    tt_cm_b.export
+		output wire [7:0]  tt_cm_g_export,    //    tt_cm_g.export
+		output wire [7:0]  tt_cm_r_export,    //    tt_cm_r.export
+		input  wire [9:0]  tt_cm_x_export,    //    tt_cm_x.export
+		input  wire [9:0]  tt_cm_y_export,    //    tt_cm_y.export
+		output wire        vga_clk_25_clk     // vga_clk_25.clk
 	);
 
 	wire         sdram_pll_c2_clk;                                            // sdram_pll:c2 -> [Color_Palette_0:CLK_100, Sprite_RAM_0:CLK_100, Tile_Table_0:CLK_100, irq_mapper:clk, jtag_uart_0:clk, mm_interconnect_0:sdram_pll_c2_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, otg_hpi_address:clk, otg_hpi_cs:clk, otg_hpi_data:clk, otg_hpi_r:clk, otg_hpi_reset:clk, otg_hpi_w:clk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys_0:clock, timer_0:clk]
@@ -61,14 +61,14 @@ module final_project_soc (
 	wire  [31:0] mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata;   // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_chipselect;      // mm_interconnect_0:Tile_Table_0_avalon_slave_chipselect -> Tile_Table_0:AVL_CS
 	wire  [31:0] mm_interconnect_0_tile_table_0_avalon_slave_readdata;        // Tile_Table_0:AVL_READDATA -> mm_interconnect_0:Tile_Table_0_avalon_slave_readdata
-	wire  [12:0] mm_interconnect_0_tile_table_0_avalon_slave_address;         // mm_interconnect_0:Tile_Table_0_avalon_slave_address -> Tile_Table_0:AVL_ADDR
+	wire  [13:0] mm_interconnect_0_tile_table_0_avalon_slave_address;         // mm_interconnect_0:Tile_Table_0_avalon_slave_address -> Tile_Table_0:AVL_ADDR
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_read;            // mm_interconnect_0:Tile_Table_0_avalon_slave_read -> Tile_Table_0:AVL_READ
 	wire   [3:0] mm_interconnect_0_tile_table_0_avalon_slave_byteenable;      // mm_interconnect_0:Tile_Table_0_avalon_slave_byteenable -> Tile_Table_0:AVL_BYTE_EN
 	wire         mm_interconnect_0_tile_table_0_avalon_slave_write;           // mm_interconnect_0:Tile_Table_0_avalon_slave_write -> Tile_Table_0:AVL_WRITE
 	wire  [31:0] mm_interconnect_0_tile_table_0_avalon_slave_writedata;       // mm_interconnect_0:Tile_Table_0_avalon_slave_writedata -> Tile_Table_0:AVL_WRITEDATA
 	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_chipselect;    // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_chipselect -> Sprite_RAM_0:AVL_CS
 	wire  [31:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_readdata;      // Sprite_RAM_0:AVL_READDATA -> mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_readdata
-	wire  [10:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_address;       // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_address -> Sprite_RAM_0:AVL_ADDR
+	wire   [8:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_address;       // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_address -> Sprite_RAM_0:AVL_ADDR
 	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_read;          // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_read -> Sprite_RAM_0:AVL_READ
 	wire   [3:0] mm_interconnect_0_sprite_ram_0_avalon_slave_0_byteenable;    // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_byteenable -> Sprite_RAM_0:AVL_BYTE_EN
 	wire         mm_interconnect_0_sprite_ram_0_avalon_slave_0_write;         // mm_interconnect_0:Sprite_RAM_0_avalon_slave_0_write -> Sprite_RAM_0:AVL_WRITE
@@ -368,7 +368,7 @@ module final_project_soc (
 		.readdata           (mm_interconnect_0_sdram_pll_pll_slave_readdata),  //                      .readdata
 		.writedata          (mm_interconnect_0_sdram_pll_pll_slave_writedata), //                      .writedata
 		.c0                 (),                                                //                    c0.clk
-		.c1                 (sdram_clk_50_clk),                                //                    c1.clk
+		.c1                 (vga_clk_25_clk),                                  //                    c1.clk
 		.c2                 (sdram_pll_c2_clk),                                //                    c2.clk
 		.c3                 (sdram_clk_clk),                                   //                    c3.clk
 		.scandone           (),                                                //           (terminated)

@@ -10,7 +10,6 @@ module final_project_soc (
 	hpi_w_export,
 	reset_reset_n,
 	sdram_clk_clk,
-	sdram_clk_50_clk,
 	sdram_wire_addr,
 	sdram_wire_ba,
 	sdram_wire_cas_n,
@@ -24,7 +23,8 @@ module final_project_soc (
 	tt_cm_g_export,
 	tt_cm_r_export,
 	tt_cm_x_export,
-	tt_cm_y_export);	
+	tt_cm_y_export,
+	vga_clk_25_clk);	
 
 	input		clk_clk;
 	output	[1:0]	hpi_addr_export;
@@ -36,7 +36,6 @@ module final_project_soc (
 	output		hpi_w_export;
 	input		reset_reset_n;
 	output		sdram_clk_clk;
-	output		sdram_clk_50_clk;
 	output	[12:0]	sdram_wire_addr;
 	output	[1:0]	sdram_wire_ba;
 	output		sdram_wire_cas_n;
@@ -51,4 +50,5 @@ module final_project_soc (
 	output	[7:0]	tt_cm_r_export;
 	input	[9:0]	tt_cm_x_export;
 	input	[9:0]	tt_cm_y_export;
+	output		vga_clk_25_clk;
 endmodule

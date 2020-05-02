@@ -52,6 +52,11 @@ module tile_table (
 	// Remaining y value should between 0..15. Assign 4 bits.
 	logic [3:0] remain_y;
 	
+	// The code below is identical to
+	// tile_x = DrawX / 8;
+	// tile_y = DrawY / 16;
+	// remain_x = DrawX mod 8;
+	// remain_y = DrawY mod 16;
 	assign tile_x = DrawX[9:3];
 	assign remain_x = DrawX[2:0];
 	assign tile_y = DrawY[8:4];		// Highest bit of DrawY should be 0.
@@ -86,12 +91,6 @@ module tile_table (
 //				AVL_READDATA = {{21{1'b0}}, tiles[addr_change]};
 //			end
 //		end
-		
-		// The code below is identical to
-		// tile_x = DrawX / 8;
-		// tile_y = DrawY / 16;
-		// remain_x = DrawX mod 8;
-		// remain_y = DrawY mod 16;
 		
 		// Get the corresponding pattern from sprite_ram.
 		// get_index = tiles[get_addr_change][7:0];	// The current pattern.
