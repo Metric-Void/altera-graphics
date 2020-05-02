@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 2, 2020 2:55:24 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1588406124289</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 2, 2020 5:56:57 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1588460217675</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Lab7\final_project\software\final_project_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>C:\Lab7\final_project\final_project_soc.sopcinfo</SopcDesignFile>
@@ -978,8 +978,8 @@
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>Tile_Table_0</slaveDescriptor>
-                <addressRange>0x00010000 - 0x0001FFFF</addressRange>
-                <addressSpan>65536</addressSpan>
+                <addressRange>0x00008000 - 0x0000FFFF</addressRange>
+                <addressSpan>32768</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>

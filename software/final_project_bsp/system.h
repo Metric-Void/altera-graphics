@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'final_project_soc'
  * SOPC Builder design path: C:/Lab7/final_project/final_project_soc.sopcinfo
  *
- * Generated: Sat May 02 02:55:24 CDT 2020
+ * Generated: Sat May 02 17:56:58 CDT 2020
  */
 
 /*
@@ -226,11 +226,11 @@
  */
 
 #define ALT_MODULE_CLASS_Tile_Table_0 Tile_Table
-#define TILE_TABLE_0_BASE 0x10000
+#define TILE_TABLE_0_BASE 0x8000
 #define TILE_TABLE_0_IRQ -1
 #define TILE_TABLE_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define TILE_TABLE_0_NAME "/dev/Tile_Table_0"
-#define TILE_TABLE_0_SPAN 65536
+#define TILE_TABLE_0_SPAN 32768
 #define TILE_TABLE_0_TYPE "Tile_Table"
 
 
@@ -519,7 +519,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1588405366
+#define SYSID_QSYS_0_TIMESTAMP 1588459733
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 
