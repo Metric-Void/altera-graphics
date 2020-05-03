@@ -377,9 +377,45 @@ void pinkys_move(Game* game) {
 
 }
 
+uint8_t ikdirs[4] = {5,5,5,5};
+uint8_t lastdirection = 0;
 // Inky. Patrol an area.
+// Use a psuedo-Mattrox distribution.
 void inkys_move(Game*game) {
+	// A slightly higher chance to stay the same direction.
+	ikdirs[lastdirection] += 3;
+	uint8_t nextlast;
+	uint8_t direction = rand() % (ikdirs[0] + ikdirs[1] + ikdirs[2] + ikdirs[3]);
 
+	uint8_t newx = game->inky.xpos;
+	uint8_t newy = game->inky.ypos;
+	if(direction < ikdirs[0]) {
+		newy -= 1;
+		ikdirs[0] += 1;
+		nextlast = 0;
+	} else if (direction < ikdirs[0] + ikdirs[1]) {
+		newy += 1;
+		ikdirs[1] += 1;
+		nextlast = 1;
+	} else if (direction < ikdirs[0] + ikdirs[1] + ikdirs[2]) {
+		newx -= 1;
+		ikdirs[2] += 1;
+		nextlast = 2;
+	} else {
+		newx += 1;
+		ikdirs[3] += 1;
+		nextlast = 3;
+	}
+
+	ikdirs[lastdirection] -= 10;
+	lastdirection = nextlast;
+
+	if(game->game_map[newx][newy] != WALL) {
+		addPendingPos(newx, newy);
+		addPendingPos(game->inky.xpos, game->inky.ypos);
+		game->inky.xpos = newx;
+		game->inky.ypos = newy;
+	}
 }
 
 // Clyde. Move randomly.
@@ -491,7 +527,6 @@ void wallPalette() {
 	writePalette(wallPalette);
 	free(wallPalette);
 }
-
 // This function initializes the screen.
 void initScreen() {
 	textPalette();
@@ -613,6 +648,8 @@ void drawBoard(Game* game) {
 				continue;
 			} else if(i==game->clyde.xpos && j==game->clyde.ypos) {
 				continue;
+			} else if(i==game->player.xpos && j==game->player.ypos) {
+				continue;
 			}
 			int curr_tile_xb = j*2+20;
 			int curr_tile_y = i;
@@ -641,6 +678,9 @@ void drawBoard(Game* game) {
 		}
 	}
 
+	// Draw player
+	drawTile(game->player.ypos*2+20, game->player.xpos, 1, 1);
+	drawTile(game->player.ypos*2+21, game->player.xpos, 1, 2);
 	// Draw ghosts.
 	drawTile(game->blinky.ypos*2+20, game->blinky.xpos, 3, 3);
 	drawTile(game->blinky.ypos*2+21, game->blinky.xpos, 3, 4);
@@ -691,6 +731,9 @@ void updateBoard(Game* game) {
 		}
 	}
 
+	// Draw player
+	drawTile(game->player.ypos*2+20, game->player.xpos, 1, 1);
+	drawTile(game->player.ypos*2+21, game->player.xpos, 1, 2);
 	// Draw ghosts.
 	drawTile(game->blinky.ypos*2+20, game->blinky.xpos, 3, 3);
 	drawTile(game->blinky.ypos*2+21, game->blinky.xpos, 3, 4);
