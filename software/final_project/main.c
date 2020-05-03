@@ -36,6 +36,8 @@
 int main(void)
 {
 	game_tick();
+	return 0;
+
 	IO_init();
 
 	/*while(1)

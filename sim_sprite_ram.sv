@@ -46,17 +46,27 @@ initial begin
 	
 	// Font RAM test.
 	// Write something to 100000000
+	AVL_CS = 1'b1;
+	AVL_BYTE_EN = 4'hF;
+	
 	AVL_ADDR = 9'h00;
 	AVL_WRITEDATA = 32'hCFFCDFFD;
-	AVL_CS = 1'b1;
 	#10 AVL_WRITE = 1'b1;
-		 AVL_BYTE_EN = 4'hF;
-	#20 AVL_WRITE = 1'b0;
-		 AVL_CS = 1'b0;
+	#10 AVL_WRITE = 1'b0;
+	AVL_ADDR = 9'h01;
+	AVL_WRITEDATA = 32'hDEADBEEF;
+	#10 AVL_WRITE = 1'b1;
+	#10 AVL_WRITE = 1'b0;
+	AVL_ADDR = 9'h02;
+	AVL_WRITEDATA = 32'hFEEDECEB;
+	#10 AVL_WRITE = 1'b1;
+	#10 AVL_WRITE = 1'b0;
 	
 	index_line = 8'b10000000;
 	line_line = 4'd0;
 	#20 line_line = 4'd1;
+	#20 line_line = 4'd2;
+	#20 line_line = 4'd3;
 end
 
 endmodule
