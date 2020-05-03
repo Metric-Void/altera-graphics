@@ -1,6 +1,7 @@
 
 module final_project_soc (
 	clk_clk,
+	clk_100_clk,
 	hpi_addr_export,
 	hpi_cs_export,
 	hpi_data_in_port,
@@ -27,6 +28,7 @@ module final_project_soc (
 	vga_clk_25_clk);	
 
 	input		clk_clk;
+	output		clk_100_clk;
 	output	[1:0]	hpi_addr_export;
 	output		hpi_cs_export;
 	input	[15:0]	hpi_data_in_port;

@@ -5,6 +5,7 @@
 `timescale 1 ps / 1 ps
 module final_project_soc (
 		input  wire        clk_clk,           //        clk.clk
+		output wire        clk_100_clk,       //    clk_100.clk
 		output wire [1:0]  hpi_addr_export,   //   hpi_addr.export
 		output wire        hpi_cs_export,     //     hpi_cs.export
 		input  wire [15:0] hpi_data_in_port,  //   hpi_data.in_port
@@ -367,10 +368,11 @@ module final_project_soc (
 		.address            (mm_interconnect_0_sdram_pll_pll_slave_address),   //                      .address
 		.readdata           (mm_interconnect_0_sdram_pll_pll_slave_readdata),  //                      .readdata
 		.writedata          (mm_interconnect_0_sdram_pll_pll_slave_writedata), //                      .writedata
-		.c0                 (),                                                //                    c0.clk
+		.c0                 (clk_100_clk),                                     //                    c0.clk
 		.c1                 (vga_clk_25_clk),                                  //                    c1.clk
 		.c2                 (sdram_pll_c2_clk),                                //                    c2.clk
 		.c3                 (sdram_clk_clk),                                   //                    c3.clk
+		.c4                 (),                                                //                    c4.clk
 		.scandone           (),                                                //           (terminated)
 		.scandataout        (),                                                //           (terminated)
 		.areset             (1'b0),                                            //           (terminated)

@@ -77,7 +77,7 @@ module sprite_ram(
 	
 	// Interface with dpram.
 	logic [8:0] hw_addr_transform;
-	logic [32:0] hw_dataraw;
+	logic [31:0] hw_dataraw;
 	logic [3:0] hw_be;
 	
 	always_comb begin

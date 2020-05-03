@@ -1536,9 +1536,9 @@ module final_project_soc_mm_interconnect_0 (
 		.UAV_CONSTANT_BURST_BEHAVIOR    (0),
 		.AV_REQUIRE_UNALIGNED_ADDRESSES (0),
 		.CHIPSELECT_THROUGH_READLATENCY (0),
-		.AV_READ_WAIT_CYCLES            (0),
+		.AV_READ_WAIT_CYCLES            (1),
 		.AV_WRITE_WAIT_CYCLES           (0),
-		.AV_SETUP_WAIT_CYCLES           (0),
+		.AV_SETUP_WAIT_CYCLES           (1),
 		.AV_DATA_HOLD_CYCLES            (0)
 	) color_palette_0_avalon_slave_0_translator (
 		.clk                    (sdram_pll_c2_clk),                                      //                      clk.clk

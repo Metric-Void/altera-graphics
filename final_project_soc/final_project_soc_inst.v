@@ -1,5 +1,6 @@
 	final_project_soc u0 (
 		.clk_clk           (<connected-to-clk_clk>),           //        clk.clk
+		.clk_100_clk       (<connected-to-clk_100_clk>),       //    clk_100.clk
 		.hpi_addr_export   (<connected-to-hpi_addr_export>),   //   hpi_addr.export
 		.hpi_cs_export     (<connected-to-hpi_cs_export>),     //     hpi_cs.export
 		.hpi_data_in_port  (<connected-to-hpi_data_in_port>),  //   hpi_data.in_port

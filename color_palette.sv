@@ -29,8 +29,8 @@ always @(posedge CLK_100) begin
 	if(AVL_CS) begin
 		if(AVL_WRITE) begin
 			regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][7:0] = AVL_BYTE_EN[0]? AVL_WRITEDATA[7:0] : regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][7:0];
-			regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][15:8] = AVL_BYTE_EN[0]? AVL_WRITEDATA[15:8] : regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][15:8];
-			regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][23:16] = AVL_BYTE_EN[0]? AVL_WRITEDATA[23:16] : regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][23:16];
+			regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][15:8] = AVL_BYTE_EN[1]? AVL_WRITEDATA[15:8] : regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][15:8];
+			regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][23:16] = AVL_BYTE_EN[2]? AVL_WRITEDATA[23:16] : regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]][23:16];
 		end else if (AVL_READ) begin
 			AVL_READDATA = regfile[AVL_ADDR[4:2]][AVL_ADDR[1:0]];
 		end

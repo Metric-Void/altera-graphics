@@ -1,6 +1,7 @@
 	component final_project_soc is
 		port (
 			clk_clk           : in    std_logic                     := 'X';             -- clk
+			clk_100_clk       : out   std_logic;                                        -- clk
 			hpi_addr_export   : out   std_logic_vector(1 downto 0);                     -- export
 			hpi_cs_export     : out   std_logic;                                        -- export
 			hpi_data_in_port  : in    std_logic_vector(15 downto 0) := (others => 'X'); -- in_port
@@ -31,6 +32,7 @@
 	u0 : component final_project_soc
 		port map (
 			clk_clk           => CONNECTED_TO_clk_clk,           --        clk.clk
+			clk_100_clk       => CONNECTED_TO_clk_100_clk,       --    clk_100.clk
 			hpi_addr_export   => CONNECTED_TO_hpi_addr_export,   --   hpi_addr.export
 			hpi_cs_export     => CONNECTED_TO_hpi_cs_export,     --     hpi_cs.export
 			hpi_data_in_port  => CONNECTED_TO_hpi_data_in_port,  --   hpi_data.in_port

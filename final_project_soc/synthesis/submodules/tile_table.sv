@@ -2,7 +2,7 @@
 Tile Table
 ================================================
 * Avalon-MM interface description.
-The tile to write to/read from is indicated by 0xABCD.
+The tile to write to/read from is indicated by 0xABCD. (16 bits)
 0xAB = height index (0..30)
 0xDE = width index (0..80)
 Since 30 = 1E = 0001 1110, 12:0 will be enough. (13 bits)
@@ -10,6 +10,9 @@ Since 30 = 1E = 0001 1110, 12:0 will be enough. (13 bits)
 Data is 11 bits. [7:0] indicates pattern index, [10:8] indicates palette.
 
 DrawX is horizontal (Width), DrawY is vertical(height).
+-------------------------------------------------
+There are a total of 255 tiles.
+
 ***********************************************/
 module tile_table (
 	input logic CLK_100, CLK_50, RESET,
@@ -34,9 +37,6 @@ module tile_table (
 	input logic [9:0] DrawX, DrawY,	// 10 bits allows 0..1023.
 	output logic [7:0] VGA_RED, VGA_GREEN, VGA_BLUE
 );
-	// 255 total possible tiles. 0..255 (8 bits) at [7:0].
-	// 8 total possible palettes, 0..7 (3 bits) at [10:8].
-	// logic [10:0] tiles [2560];
 	logic [11:0] addr_change;
 	assign addr_change = {AVL_ADDR[6:0], AVL_ADDR[12:8]};
 	
