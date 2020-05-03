@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'final_project_soc'
  * SOPC Builder design path: C:/Lab7/final_project/final_project_soc.sopcinfo
  *
- * Generated: Sun May 03 13:44:46 CDT 2020
+ * Generated: Sun May 03 16:00:03 CDT 2020
  */
 
 /*
@@ -200,19 +200,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart_0"
-#define ALT_STDERR_BASE 0x140
+#define ALT_STDERR_BASE 0x150
 #define ALT_STDERR_DEV jtag_uart_0
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart_0"
-#define ALT_STDIN_BASE 0x140
+#define ALT_STDIN_BASE 0x150
 #define ALT_STDIN_DEV jtag_uart_0
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart_0"
-#define ALT_STDOUT_BASE 0x140
+#define ALT_STDOUT_BASE 0x150
 #define ALT_STDOUT_DEV jtag_uart_0
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -251,7 +251,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_0 altera_avalon_jtag_uart
-#define JTAG_UART_0_BASE 0x140
+#define JTAG_UART_0_BASE 0x150
 #define JTAG_UART_0_IRQ 5
 #define JTAG_UART_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_0_NAME "/dev/jtag_uart_0"
@@ -298,7 +298,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_address altera_avalon_pio
-#define OTG_HPI_ADDRESS_BASE 0x40
+#define OTG_HPI_ADDRESS_BASE 0x50
 #define OTG_HPI_ADDRESS_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_ADDRESS_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_ADDRESS_CAPTURE 0
@@ -325,7 +325,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_cs altera_avalon_pio
-#define OTG_HPI_CS_BASE 0x60
+#define OTG_HPI_CS_BASE 0x70
 #define OTG_HPI_CS_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_CS_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_CS_CAPTURE 0
@@ -352,7 +352,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_data altera_avalon_pio
-#define OTG_HPI_DATA_BASE 0x110
+#define OTG_HPI_DATA_BASE 0x120
 #define OTG_HPI_DATA_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_DATA_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_DATA_CAPTURE 0
@@ -379,7 +379,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_r altera_avalon_pio
-#define OTG_HPI_R_BASE 0x100
+#define OTG_HPI_R_BASE 0x110
 #define OTG_HPI_R_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_R_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_R_CAPTURE 0
@@ -406,7 +406,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_reset altera_avalon_pio
-#define OTG_HPI_RESET_BASE 0x50
+#define OTG_HPI_RESET_BASE 0x60
 #define OTG_HPI_RESET_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_RESET_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_RESET_CAPTURE 0
@@ -433,7 +433,7 @@
  */
 
 #define ALT_MODULE_CLASS_otg_hpi_w altera_avalon_pio
-#define OTG_HPI_W_BASE 0x70
+#define OTG_HPI_W_BASE 0x100
 #define OTG_HPI_W_BIT_CLEARING_EDGE_REGISTER 0
 #define OTG_HPI_W_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define OTG_HPI_W_CAPTURE 0
@@ -499,7 +499,7 @@
  */
 
 #define ALT_MODULE_CLASS_sdram_pll altpll
-#define SDRAM_PLL_BASE 0x120
+#define SDRAM_PLL_BASE 0x130
 #define SDRAM_PLL_IRQ -1
 #define SDRAM_PLL_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SDRAM_PLL_NAME "/dev/sdram_pll"
@@ -513,13 +513,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys_0 altera_avalon_sysid_qsys
-#define SYSID_QSYS_0_BASE 0x138
+#define SYSID_QSYS_0_BASE 0x148
 #define SYSID_QSYS_0_ID 0
 #define SYSID_QSYS_0_IRQ -1
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1588531188
+#define SYSID_QSYS_0_TIMESTAMP 1588539457
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -547,5 +547,32 @@
 #define TIMER_0_TICKS_PER_SEC 1000
 #define TIMER_0_TIMEOUT_PULSE_OUTPUT 0
 #define TIMER_0_TYPE "altera_avalon_timer"
+
+
+/*
+ * vga_vs configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_vga_vs altera_avalon_pio
+#define VGA_VS_BASE 0x40
+#define VGA_VS_BIT_CLEARING_EDGE_REGISTER 0
+#define VGA_VS_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define VGA_VS_CAPTURE 0
+#define VGA_VS_DATA_WIDTH 1
+#define VGA_VS_DO_TEST_BENCH_WIRING 0
+#define VGA_VS_DRIVEN_SIM_VALUE 0
+#define VGA_VS_EDGE_TYPE "NONE"
+#define VGA_VS_FREQ 100000000
+#define VGA_VS_HAS_IN 1
+#define VGA_VS_HAS_OUT 0
+#define VGA_VS_HAS_TRI 0
+#define VGA_VS_IRQ -1
+#define VGA_VS_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define VGA_VS_IRQ_TYPE "NONE"
+#define VGA_VS_NAME "/dev/vga_vs"
+#define VGA_VS_RESET_VALUE 0
+#define VGA_VS_SPAN 16
+#define VGA_VS_TYPE "altera_avalon_pio"
 
 #endif /* __SYSTEM_H_ */

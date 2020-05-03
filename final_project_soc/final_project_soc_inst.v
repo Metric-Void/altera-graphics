@@ -24,6 +24,7 @@
 		.tt_cm_r_export    (<connected-to-tt_cm_r_export>),    //    tt_cm_r.export
 		.tt_cm_x_export    (<connected-to-tt_cm_x_export>),    //    tt_cm_x.export
 		.tt_cm_y_export    (<connected-to-tt_cm_y_export>),    //    tt_cm_y.export
-		.vga_clk_25_clk    (<connected-to-vga_clk_25_clk>)     // vga_clk_25.clk
+		.vga_clk_25_clk    (<connected-to-vga_clk_25_clk>),    // vga_clk_25.clk
+		.vga_vs_export     (<connected-to-vga_vs_export>)      //     vga_vs.export
 	);
 

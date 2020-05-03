@@ -25,7 +25,8 @@
 			tt_cm_r_export    : out   std_logic_vector(7 downto 0);                     -- export
 			tt_cm_x_export    : in    std_logic_vector(9 downto 0)  := (others => 'X'); -- export
 			tt_cm_y_export    : in    std_logic_vector(9 downto 0)  := (others => 'X'); -- export
-			vga_clk_25_clk    : out   std_logic                                         -- clk
+			vga_clk_25_clk    : out   std_logic;                                        -- clk
+			vga_vs_export     : in    std_logic                     := 'X'              -- export
 		);
 	end component final_project_soc;
 
@@ -56,6 +57,7 @@
 			tt_cm_r_export    => CONNECTED_TO_tt_cm_r_export,    --    tt_cm_r.export
 			tt_cm_x_export    => CONNECTED_TO_tt_cm_x_export,    --    tt_cm_x.export
 			tt_cm_y_export    => CONNECTED_TO_tt_cm_y_export,    --    tt_cm_y.export
-			vga_clk_25_clk    => CONNECTED_TO_vga_clk_25_clk     -- vga_clk_25.clk
+			vga_clk_25_clk    => CONNECTED_TO_vga_clk_25_clk,    -- vga_clk_25.clk
+			vga_vs_export     => CONNECTED_TO_vga_vs_export      --     vga_vs.export
 		);
 

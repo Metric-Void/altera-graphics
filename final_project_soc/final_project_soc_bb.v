@@ -25,7 +25,8 @@ module final_project_soc (
 	tt_cm_r_export,
 	tt_cm_x_export,
 	tt_cm_y_export,
-	vga_clk_25_clk);	
+	vga_clk_25_clk,
+	vga_vs_export);	
 
 	input		clk_clk;
 	output		clk_100_clk;
@@ -53,4 +54,5 @@ module final_project_soc (
 	input	[9:0]	tt_cm_x_export;
 	input	[9:0]	tt_cm_y_export;
 	output		vga_clk_25_clk;
+	input		vga_vs_export;
 endmodule
