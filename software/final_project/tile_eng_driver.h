@@ -11,8 +11,8 @@
 #include <stdint.h>
 
 typedef struct _palette {
-	uint8_t paletteId;
-	uint32_t colors[4];
+	int paletteId;
+	int colors[4];
 } Palette;
 
 typedef struct _sprite {
@@ -22,9 +22,11 @@ typedef struct _sprite {
 
 void drawTile(int x, int y, int paletteId, int spriteId);
 void writePaletteHelper(uint8_t paletteId, uint8_t colorIndex, int rgbColor);
-void writePalette(Palette toWrite);
+void writePalette(Palette* toWrite);
 void parseSpriteLine(Sprite *sprite, uint8_t linenum, char data[8]);
 void parseSprite(Sprite *target, char datas[16][8]);
 void writeSprite(Sprite* target);
+void writeText(int beginningX, int Y, char text[], int paletteId);
+void clearScreen();
 
 #endif /* TILE_ENG_DRIVER_H_ */

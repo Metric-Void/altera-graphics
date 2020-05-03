@@ -9,7 +9,8 @@
 #include "tile_eng_driver.h"
 #include <stdint.h>
 
-void game_tick() {
+void screen_test() {
+	printf("Screen Test is running!");
 	palette_ptr[0b00000] = 0x117180;
 	palette_ptr[0b00001] = 0x6EECFF;
 	palette_ptr[0b00010] = 0x1BB4CC;
@@ -21,19 +22,19 @@ void game_tick() {
 	newPalette.colors[1] = 0xF3C7FF;
 	newPalette.colors[2] = 0x796380;
 	newPalette.colors[3] = 0xE57DFF;
-	writePalette(newPalette);
+	writePalette(&newPalette);
 
 	Palette newPalette2;
 	newPalette2.paletteId = 2;
 	newPalette2.colors[0] = 0x2F802E;
 	newPalette2.colors[3] = 0x5EFF5B;
-	writePalette(newPalette2);
+	writePalette(&newPalette2);
 
 	Palette newPalette3;
 	newPalette3.paletteId = 3;
 	newPalette3.colors[0] = 0x805E1B;
 	newPalette3.colors[3] = 0xFFBC36;
-	writePalette(newPalette3);
+	writePalette(&newPalette3);
 
 	Sprite wavey;
 	wavey.sprite_id = 0;
@@ -42,16 +43,16 @@ void game_tick() {
 			"        ",
 			"        ",
 			"@       ",
-			" @     @",
-			"  @   @ ",
-			"   @ @  ",
-			"    @   ",
-			"        ",
-			"    #   ",
-			"   # #  ",
-			"  #   # ",
-			" #     #",
+			" @     #",
+			"  @   # ",
+			"   @ #  ",
+			"    *   ",
+			"   # @  ",
+			"  #   @ ",
+			" #     @",
 			"#       ",
+			"        ",
+			"        ",
 			"        ",
 			"        ",
 	};
@@ -78,4 +79,9 @@ void game_tick() {
 			counter = (counter+1) & 0x7F;
 		}
 	}
+
+	writeText(0,0,"Score",0);
+	writeText(0,2,"Highscore",0);
 }
+
+

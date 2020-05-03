@@ -10,6 +10,6 @@
 
 #include "hardware.h"
 
-void game_tick();
+void screen_test();
 
 #endif /* CORE_H_ */

@@ -26,7 +26,7 @@
 #include "usb.h"
 #include "lcp_cmd.h"
 #include "lcp_data.h"
-#include "core.h"
+#include "logic.h"
 
 //----------------------------------------------------------------------------------------//
 //
@@ -35,10 +35,9 @@
 //----------------------------------------------------------------------------------------//
 int main(void)
 {
-	game_tick();
-	return 0;
-
 	IO_init();
+	Game mainGame;
+	init_game(&mainGame);
 
 	/*while(1)
 	{
@@ -65,6 +64,7 @@ int main(void)
 	//----------------------------------------SIE1 initial---------------------------------------------------//
 	USB_HOT_PLUG:
 	UsbSoftReset();
+	drawBoard(&mainGame);
 
 	// STEP 1a:
 	UsbWrite (HPI_SIE1_MSG_ADR, 0);
@@ -556,12 +556,8 @@ int main(void)
 		printf("\nfirst two keycode values are %04x\n",keycode);
 		// We only need the first keycode, which is at the lower byte of keycode.
 		// Send the keycode to hardware via PIO.
-		// *keycode_base = keycode & 0xff;
 
 		usleep(200);//usleep(5000);
-
-		// TODO Core game logic can be written here.
-
 		usb_ctl_val = UsbRead(ctl_reg);
 
 		if(!(usb_ctl_val & no_device))

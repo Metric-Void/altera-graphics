@@ -92,7 +92,8 @@ C_SRCS += main.c
 C_SRCS += usb.c
 C_SRCS += core.c
 C_SRCS += tile_eng_driver.c
-CXX_SRCS :=
+C_SRCS += logic.c
+CXX_SRCS := updater.cpp
 ASM_SRCS :=
 
 

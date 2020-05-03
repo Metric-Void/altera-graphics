@@ -8,6 +8,8 @@
 #include "hardware.h"
 #include "tile_eng_driver.h"
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 void drawTile(int x, int y, int paletteId, int spriteId) {
 	uint16_t tt_addr = ((y & 0xFF)<<8) | (x & 0xFF);
@@ -19,14 +21,16 @@ void drawTile(int x, int y, int paletteId, int spriteId) {
 void writePaletteHelper(uint8_t paletteId, uint8_t colorIndex, int rgbColor) {
 	uint8_t paletteAddr = ((paletteId & 0x7) << 2) | (colorIndex & 0x3);
 	palette_ptr[paletteAddr] = rgbColor & 0x00FFFFFF;
+	printf("palette_ptr[%02x]=%06x\n",paletteAddr, rgbColor & 0x00FFFFFF);
 }
 
 // Write an entire palette to the palette storage.
-void writePalette(Palette toWrite) {
-	writePaletteHelper(toWrite.paletteId, 0, toWrite.colors[0]);
-	writePaletteHelper(toWrite.paletteId, 1, toWrite.colors[1]);
-	writePaletteHelper(toWrite.paletteId, 2, toWrite.colors[2]);
-	writePaletteHelper(toWrite.paletteId, 3, toWrite.colors[3]);
+void writePalette(Palette* toWrite) {
+	writePaletteHelper(toWrite->paletteId, 0, toWrite->colors[0]);
+	writePaletteHelper(toWrite->paletteId, 1, toWrite->colors[1]);
+	writePaletteHelper(toWrite->paletteId, 2, toWrite->colors[2]);
+	writePaletteHelper(toWrite->paletteId, 3, toWrite->colors[3]);
+	printf("\n");
 }
 
 // " " - 00, "@" - 01. "#" - 10, "*" - 11.
@@ -66,5 +70,20 @@ void writeSprite(Sprite* target) {
 		int prepare_dualine = (((int)(target->lines[2*i]) & 0xFFFF)<< 16) | (((int)(target->lines[2*i+1]) & 0xFFFF));
 		printf("%08x\n",prepare_dualine);
 		spriteram_ptr[((target->sprite_id & 0x3F) << 3) | (i&0x7)] = prepare_dualine;
+	}
+}
+
+void writeText(int beginningX, int Y, char text[], int paletteId) {
+	int length = strlen(text);
+	for(int i=0;i<length;i+=1) {
+		drawTile(beginningX+i, Y, paletteId, text[i]&0x7F);
+	}
+}
+
+void clearScreen() {
+	for(int i=0; i<30; i++){
+		for(int j=0; j<80; j++) {
+			drawTile(j,i,0,0);
+		}
 	}
 }
