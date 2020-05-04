@@ -113,11 +113,12 @@ static inline Point stack_peek(LinkedPoints* head);
 static inline LinkedPoints* stack_pop(LinkedPoints* head, Point* popped_data);
 static inline bool PointEquals(const Point a, const Point b);
 void blinkys_move(Game* game);
-void pinkys_move(Game* game);
+void pinkys_move(Game* game, char keypress);
 void inkys_move(Game* game);
 void clydes_move(Game* game);
 void initScreen();
 void drawBoard(Game* game);
+void updateBoard(Game* game);
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'final_project_soc'
  * SOPC Builder design path: C:/Lab7/final_project/final_project_soc.sopcinfo
  *
- * Generated: Sun May 03 16:00:03 CDT 2020
+ * Generated: Sun May 03 20:15:49 CDT 2020
  */
 
 /*
@@ -519,7 +519,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1588539457
+#define SYSID_QSYS_0_TIMESTAMP 1588553486
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -558,11 +558,11 @@
 #define VGA_VS_BASE 0x40
 #define VGA_VS_BIT_CLEARING_EDGE_REGISTER 0
 #define VGA_VS_BIT_MODIFYING_OUTPUT_REGISTER 0
-#define VGA_VS_CAPTURE 0
+#define VGA_VS_CAPTURE 1
 #define VGA_VS_DATA_WIDTH 1
 #define VGA_VS_DO_TEST_BENCH_WIRING 0
 #define VGA_VS_DRIVEN_SIM_VALUE 0
-#define VGA_VS_EDGE_TYPE "NONE"
+#define VGA_VS_EDGE_TYPE "RISING"
 #define VGA_VS_FREQ 100000000
 #define VGA_VS_HAS_IN 1
 #define VGA_VS_HAS_OUT 0

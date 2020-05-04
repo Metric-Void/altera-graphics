@@ -8,6 +8,8 @@
 #include "hardware.h"
 #include "tile_eng_driver.h"
 #include <stdint.h>
+#include "system.h"
+#include<stdio.h>
 
 void screen_test() {
 	printf("Screen Test is running!");

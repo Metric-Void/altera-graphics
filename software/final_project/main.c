@@ -27,6 +27,10 @@
 #include "lcp_cmd.h"
 #include "lcp_data.h"
 #include "logic.h"
+#include "hardware.h"
+
+// Edge capture.
+// uint8_t vga_vs_ptr_last;
 
 //----------------------------------------------------------------------------------------//
 //
@@ -35,10 +39,16 @@
 //----------------------------------------------------------------------------------------//
 int main(void)
 {
+	printf("Main function started...\n");
 	IO_init();
+	printf("Creating board...\n");
 	Game mainGame;
+	printf("Initializing game...\n");
 	init_game(&mainGame);
+	printf("Drawing initial board...\n");
+	drawBoard(&mainGame);
 
+	printf("Start USB loop...\n");
 	/*while(1)
 	{
 		IO_write(HPI_MAILBOX,COMM_EXEC_INT);
@@ -63,8 +73,17 @@ int main(void)
 
 	//----------------------------------------SIE1 initial---------------------------------------------------//
 	USB_HOT_PLUG:
-	UsbSoftReset();
+	// UsbSoftReset();
+
 	drawBoard(&mainGame);
+	for(int i=0; i<=5;i++) {
+		printf("[VGA_VS PIO %d] = %08x", i, vga_vs_ptr[i]);
+	}
+	if(vga_vs_ptr[3]) {	// Edge detection register
+		updateBoard(&mainGame);
+		vga_vs_ptr[3] = 0x00000000;
+		printf("Board Updated\n");
+	}
 
 	// STEP 1a:
 	UsbWrite (HPI_SIE1_MSG_ADR, 0);

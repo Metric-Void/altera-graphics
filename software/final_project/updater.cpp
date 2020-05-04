@@ -26,7 +26,7 @@ public:
 		return t.k.tile_x == this->k.tile_x && t.k.tile_y == k.tile_y;
 	}
 	bool operator<(const TileGroup& t) const {
-		return t.k.tile_x < this->k.tile_x || t.k.tile_y < k.tile_y;
+		return (t.k.tile_x < this->k.tile_x) || (t.k.tile_y < k.tile_y);
 	}
 };
 
