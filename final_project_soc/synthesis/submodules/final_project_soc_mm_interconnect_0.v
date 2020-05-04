@@ -121,7 +121,10 @@ module final_project_soc_mm_interconnect_0 (
 		output wire [15:0] timer_0_s1_writedata,                                        //                                                      .writedata
 		output wire        timer_0_s1_chipselect,                                       //                                                      .chipselect
 		output wire [1:0]  vga_vs_s1_address,                                           //                                             vga_vs_s1.address
-		input  wire [31:0] vga_vs_s1_readdata                                           //                                                      .readdata
+		output wire        vga_vs_s1_write,                                             //                                                      .write
+		input  wire [31:0] vga_vs_s1_readdata,                                          //                                                      .readdata
+		output wire [31:0] vga_vs_s1_writedata,                                         //                                                      .writedata
+		output wire        vga_vs_s1_chipselect                                         //                                                      .chipselect
 	);
 
 	wire          nios2_gen2_0_data_master_translator_avalon_universal_master_0_waitrequest;          // nios2_gen2_0_data_master_agent:av_waitrequest -> nios2_gen2_0_data_master_translator:uav_waitrequest
@@ -2446,10 +2449,11 @@ module final_project_soc_mm_interconnect_0 (
 		.uav_lock               (vga_vs_s1_agent_m0_lock),                        //                         .lock
 		.uav_debugaccess        (vga_vs_s1_agent_m0_debugaccess),                 //                         .debugaccess
 		.av_address             (vga_vs_s1_address),                              //      avalon_anti_slave_0.address
+		.av_write               (vga_vs_s1_write),                                //                         .write
 		.av_readdata            (vga_vs_s1_readdata),                             //                         .readdata
-		.av_write               (),                                               //              (terminated)
+		.av_writedata           (vga_vs_s1_writedata),                            //                         .writedata
+		.av_chipselect          (vga_vs_s1_chipselect),                           //                         .chipselect
 		.av_read                (),                                               //              (terminated)
-		.av_writedata           (),                                               //              (terminated)
 		.av_begintransfer       (),                                               //              (terminated)
 		.av_beginbursttransfer  (),                                               //              (terminated)
 		.av_burstcount          (),                                               //              (terminated)
@@ -2458,7 +2462,6 @@ module final_project_soc_mm_interconnect_0 (
 		.av_waitrequest         (1'b0),                                           //              (terminated)
 		.av_writebyteenable     (),                                               //              (terminated)
 		.av_lock                (),                                               //              (terminated)
-		.av_chipselect          (),                                               //              (terminated)
 		.av_clken               (),                                               //              (terminated)
 		.uav_clken              (1'b0),                                           //              (terminated)
 		.av_debugaccess         (),                                               //              (terminated)

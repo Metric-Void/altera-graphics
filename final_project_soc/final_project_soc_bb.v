@@ -1,7 +1,7 @@
 
 module final_project_soc (
 	clk_clk,
-	clk_100_clk,
+	clk_100_export_clk,
 	hpi_addr_export,
 	hpi_cs_export,
 	hpi_data_in_port,
@@ -9,6 +9,7 @@ module final_project_soc (
 	hpi_r_export,
 	hpi_reset_export,
 	hpi_w_export,
+	pll_200_st_clk,
 	reset_reset_n,
 	sdram_clk_clk,
 	sdram_wire_addr,
@@ -29,7 +30,7 @@ module final_project_soc (
 	vga_vs_export);	
 
 	input		clk_clk;
-	output		clk_100_clk;
+	output		clk_100_export_clk;
 	output	[1:0]	hpi_addr_export;
 	output		hpi_cs_export;
 	input	[15:0]	hpi_data_in_port;
@@ -37,6 +38,7 @@ module final_project_soc (
 	output		hpi_r_export;
 	output		hpi_reset_export;
 	output		hpi_w_export;
+	output		pll_200_st_clk;
 	input		reset_reset_n;
 	output		sdram_clk_clk;
 	output	[12:0]	sdram_wire_addr;

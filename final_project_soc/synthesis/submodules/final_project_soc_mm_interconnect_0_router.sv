@@ -222,7 +222,7 @@ module final_project_soc_mm_interconnect_0_router
     end
 
     // ( 0x40 .. 0x50 )
-    if ( {address[RG:PAD2],{PAD2{1'b0}}} == 29'h40  && read_transaction  ) begin
+    if ( {address[RG:PAD2],{PAD2{1'b0}}} == 29'h40   ) begin
             src_channel = 17'b10000000000000000;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 16;
     end

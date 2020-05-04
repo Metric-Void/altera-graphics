@@ -4,33 +4,34 @@
 
 `timescale 1 ps / 1 ps
 module final_project_soc (
-		input  wire        clk_clk,           //        clk.clk
-		output wire        clk_100_clk,       //    clk_100.clk
-		output wire [1:0]  hpi_addr_export,   //   hpi_addr.export
-		output wire        hpi_cs_export,     //     hpi_cs.export
-		input  wire [15:0] hpi_data_in_port,  //   hpi_data.in_port
-		output wire [15:0] hpi_data_out_port, //           .out_port
-		output wire        hpi_r_export,      //      hpi_r.export
-		output wire        hpi_reset_export,  //  hpi_reset.export
-		output wire        hpi_w_export,      //      hpi_w.export
-		input  wire        reset_reset_n,     //      reset.reset_n
-		output wire        sdram_clk_clk,     //  sdram_clk.clk
-		output wire [12:0] sdram_wire_addr,   // sdram_wire.addr
-		output wire [1:0]  sdram_wire_ba,     //           .ba
-		output wire        sdram_wire_cas_n,  //           .cas_n
-		output wire        sdram_wire_cke,    //           .cke
-		output wire        sdram_wire_cs_n,   //           .cs_n
-		inout  wire [31:0] sdram_wire_dq,     //           .dq
-		output wire [3:0]  sdram_wire_dqm,    //           .dqm
-		output wire        sdram_wire_ras_n,  //           .ras_n
-		output wire        sdram_wire_we_n,   //           .we_n
-		output wire [7:0]  tt_cm_b_export,    //    tt_cm_b.export
-		output wire [7:0]  tt_cm_g_export,    //    tt_cm_g.export
-		output wire [7:0]  tt_cm_r_export,    //    tt_cm_r.export
-		input  wire [9:0]  tt_cm_x_export,    //    tt_cm_x.export
-		input  wire [9:0]  tt_cm_y_export,    //    tt_cm_y.export
-		output wire        vga_clk_25_clk,    // vga_clk_25.clk
-		input  wire        vga_vs_export      //     vga_vs.export
+		input  wire        clk_clk,            //            clk.clk
+		output wire        clk_100_export_clk, // clk_100_export.clk
+		output wire [1:0]  hpi_addr_export,    //       hpi_addr.export
+		output wire        hpi_cs_export,      //         hpi_cs.export
+		input  wire [15:0] hpi_data_in_port,   //       hpi_data.in_port
+		output wire [15:0] hpi_data_out_port,  //               .out_port
+		output wire        hpi_r_export,       //          hpi_r.export
+		output wire        hpi_reset_export,   //      hpi_reset.export
+		output wire        hpi_w_export,       //          hpi_w.export
+		output wire        pll_200_st_clk,     //     pll_200_st.clk
+		input  wire        reset_reset_n,      //          reset.reset_n
+		output wire        sdram_clk_clk,      //      sdram_clk.clk
+		output wire [12:0] sdram_wire_addr,    //     sdram_wire.addr
+		output wire [1:0]  sdram_wire_ba,      //               .ba
+		output wire        sdram_wire_cas_n,   //               .cas_n
+		output wire        sdram_wire_cke,     //               .cke
+		output wire        sdram_wire_cs_n,    //               .cs_n
+		inout  wire [31:0] sdram_wire_dq,      //               .dq
+		output wire [3:0]  sdram_wire_dqm,     //               .dqm
+		output wire        sdram_wire_ras_n,   //               .ras_n
+		output wire        sdram_wire_we_n,    //               .we_n
+		output wire [7:0]  tt_cm_b_export,     //        tt_cm_b.export
+		output wire [7:0]  tt_cm_g_export,     //        tt_cm_g.export
+		output wire [7:0]  tt_cm_r_export,     //        tt_cm_r.export
+		input  wire [9:0]  tt_cm_x_export,     //        tt_cm_x.export
+		input  wire [9:0]  tt_cm_y_export,     //        tt_cm_y.export
+		output wire        vga_clk_25_clk,     //     vga_clk_25.clk
+		input  wire        vga_vs_export       //         vga_vs.export
 	);
 
 	wire         sdram_pll_c2_clk;                                            // sdram_pll:c2 -> [Color_Palette_0:CLK_100, Sprite_RAM_0:CLK_100, Tile_Table_0:CLK_100, irq_mapper:clk, jtag_uart_0:clk, mm_interconnect_0:sdram_pll_c2_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, otg_hpi_address:clk, otg_hpi_cs:clk, otg_hpi_data:clk, otg_hpi_r:clk, otg_hpi_reset:clk, otg_hpi_w:clk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys_0:clock, timer_0:clk, vga_vs:clk]
@@ -148,8 +149,11 @@ module final_project_soc (
 	wire   [1:0] mm_interconnect_0_otg_hpi_address_s1_address;                // mm_interconnect_0:otg_hpi_address_s1_address -> otg_hpi_address:address
 	wire         mm_interconnect_0_otg_hpi_address_s1_write;                  // mm_interconnect_0:otg_hpi_address_s1_write -> otg_hpi_address:write_n
 	wire  [31:0] mm_interconnect_0_otg_hpi_address_s1_writedata;              // mm_interconnect_0:otg_hpi_address_s1_writedata -> otg_hpi_address:writedata
+	wire         mm_interconnect_0_vga_vs_s1_chipselect;                      // mm_interconnect_0:vga_vs_s1_chipselect -> vga_vs:chipselect
 	wire  [31:0] mm_interconnect_0_vga_vs_s1_readdata;                        // vga_vs:readdata -> mm_interconnect_0:vga_vs_s1_readdata
 	wire   [1:0] mm_interconnect_0_vga_vs_s1_address;                         // mm_interconnect_0:vga_vs_s1_address -> vga_vs:address
+	wire         mm_interconnect_0_vga_vs_s1_write;                           // mm_interconnect_0:vga_vs_s1_write -> vga_vs:write_n
+	wire  [31:0] mm_interconnect_0_vga_vs_s1_writedata;                       // mm_interconnect_0:vga_vs_s1_writedata -> vga_vs:writedata
 	wire         irq_mapper_receiver0_irq;                                    // jtag_uart_0:av_irq -> irq_mapper:receiver0_irq
 	wire         irq_mapper_receiver1_irq;                                    // timer_0:irq -> irq_mapper:receiver1_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_gen2_0:irq
@@ -371,11 +375,11 @@ module final_project_soc (
 		.address            (mm_interconnect_0_sdram_pll_pll_slave_address),   //                      .address
 		.readdata           (mm_interconnect_0_sdram_pll_pll_slave_readdata),  //                      .readdata
 		.writedata          (mm_interconnect_0_sdram_pll_pll_slave_writedata), //                      .writedata
-		.c0                 (clk_100_clk),                                     //                    c0.clk
+		.c0                 (pll_200_st_clk),                                  //                    c0.clk
 		.c1                 (vga_clk_25_clk),                                  //                    c1.clk
 		.c2                 (sdram_pll_c2_clk),                                //                    c2.clk
 		.c3                 (sdram_clk_clk),                                   //                    c3.clk
-		.c4                 (),                                                //                    c4.clk
+		.c4                 (clk_100_export_clk),                              //                    c4.clk
 		.scandone           (),                                                //           (terminated)
 		.scandataout        (),                                                //           (terminated)
 		.areset             (1'b0),                                            //           (terminated)
@@ -409,11 +413,14 @@ module final_project_soc (
 	);
 
 	final_project_soc_vga_vs vga_vs (
-		.clk      (sdram_pll_c2_clk),                     //                 clk.clk
-		.reset_n  (~rst_controller_reset_out_reset),      //               reset.reset_n
-		.address  (mm_interconnect_0_vga_vs_s1_address),  //                  s1.address
-		.readdata (mm_interconnect_0_vga_vs_s1_readdata), //                    .readdata
-		.in_port  (vga_vs_export)                         // external_connection.export
+		.clk        (sdram_pll_c2_clk),                       //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),        //               reset.reset_n
+		.address    (mm_interconnect_0_vga_vs_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_vga_vs_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_vga_vs_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_vga_vs_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_vga_vs_s1_readdata),   //                    .readdata
+		.in_port    (vga_vs_export)                           // external_connection.export
 	);
 
 	final_project_soc_mm_interconnect_0 mm_interconnect_0 (
@@ -531,7 +538,10 @@ module final_project_soc (
 		.timer_0_s1_writedata                                        (mm_interconnect_0_timer_0_s1_writedata),                      //                                                      .writedata
 		.timer_0_s1_chipselect                                       (mm_interconnect_0_timer_0_s1_chipselect),                     //                                                      .chipselect
 		.vga_vs_s1_address                                           (mm_interconnect_0_vga_vs_s1_address),                         //                                             vga_vs_s1.address
-		.vga_vs_s1_readdata                                          (mm_interconnect_0_vga_vs_s1_readdata)                         //                                                      .readdata
+		.vga_vs_s1_write                                             (mm_interconnect_0_vga_vs_s1_write),                           //                                                      .write
+		.vga_vs_s1_readdata                                          (mm_interconnect_0_vga_vs_s1_readdata),                        //                                                      .readdata
+		.vga_vs_s1_writedata                                         (mm_interconnect_0_vga_vs_s1_writedata),                       //                                                      .writedata
+		.vga_vs_s1_chipselect                                        (mm_interconnect_0_vga_vs_s1_chipselect)                       //                                                      .chipselect
 	);
 
 	final_project_soc_irq_mapper irq_mapper (
