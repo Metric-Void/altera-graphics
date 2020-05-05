@@ -14,6 +14,7 @@ extern "C" {
 
 #define _BOARD_W 15
 #define _BOARD_H 15
+#define _BOARD_COUNT 1
 
 typedef struct _point {
     uint8_t xpos;
@@ -74,6 +75,7 @@ typedef struct __tile_col {
 
 typedef struct _game_board {
     Tile game_map[15][15];
+    uint8_t current_board;
     Player player;
     Ghost blinky;
     Ghost pinky;
@@ -83,8 +85,8 @@ typedef struct _game_board {
     uint16_t candy_count;   // This will be used to determine if map has been finished
 } Game;
 
-// Game boards. May have multiple levels, so an array.
-uint8_t GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
+// Game boards. May have multiple levels, so an 3D array.
+uint8_t GAME_BOARDS[_BOARD_COUNT][_BOARD_H][_BOARD_W] = {
     {
         {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
         {0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0},

@@ -30,11 +30,20 @@ static inline bool PointEquals(const Point a, const Point b);
 // Initialize a game.
 // The game variable must already have space allocated.
 void init_game(Game* game) {
-    uint8_t current_board = 0;
-    initScreen();
+    uint8_t current_board = game->current_board;
+    if(current_board >= _BOARD_COUNT) {
+    	game->state = WON;
+    	return;
+    }
 
+    initScreen();
     game->candy_count = 0;
     game->state = PREINIT;
+    game->player.invincible = 0;
+    game->blinky.revive_cntdown = 0;
+    game->pinky.revive_cntdown = 0;
+    game->inky.revive_cntdown = 0;
+    game->clyde.revive_cntdown = 0;
 
     // Find tiles in this map and assign them.
     uint8_t i, j;
@@ -189,7 +198,14 @@ void tickgame(Game* board, char keypress) {
     }
 
     // Check if game finished.
-    if(is_over(board)) board -> state = WON;
+    if(is_over(board)) {
+    	if(board->current_board < _BOARD_COUNT-1){
+    		board->current_board += 1;
+    		init_game(board);
+    	} else {
+    		board -> state = WON;
+    	}
+    }
 }
 
 // Check if the current map is finished.
@@ -220,7 +236,8 @@ LinkedPoints* stack_push(LinkedPoints* head, const Point* data) {
         newPoint->next = head;
         return newPoint;
     } else {
-        return stack_push(head->next, data);
+        head->next = stack_push(head->next, data);
+        return head;
     }
 }
 
