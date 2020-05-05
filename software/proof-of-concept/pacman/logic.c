@@ -15,11 +15,20 @@
 // Initialize a game.
 // The game variable must already have space allocated.
 void init_game(Game* game) {
-    uint8_t current_board = 0;
+    uint8_t current_board = game->current_board;
+    if(current_board >= _BOARD_COUNT) {
+    	game->state = WON;
+    	return;
+    }
 
     game->candy_count = 0;
     game->state = PREINIT;
     game->player.invincible = 0;
+    game->blinky.revive_cntdown = 0;
+    game->pinky.revive_cntdown = 0;
+    game->inky.revive_cntdown = 0;
+    game->clyde.revive_cntdown = 0;
+    game->player.points = 0;
 
     printf("Player MOVE start\n");
     // Find tiles in this map and assign them.
@@ -120,6 +129,7 @@ void tickgame(Game* board, char keypress) {
         }
     }
 
+    if(board->player.points > board->highscore) board->highscore = board->player.points;
     // Ghosts move.
     srand(time(nullptr));
     blinkys_move(board);
@@ -175,8 +185,16 @@ void tickgame(Game* board, char keypress) {
 
     if(board->player.invincible > 0) { board->player.invincible -= 1; }
     printf("You have invincibility of %d turns\n",board->player.invincible);
+
     // Check if game finished.
-    if(is_over(board)) board -> state = WON;
+    if(is_over(board)) {
+    	if(board->current_board < _BOARD_COUNT-1){
+    		board->current_board += 1;
+    		init_game(board);
+    	} else {
+    		board -> state = WON;
+    	}
+    }
 }
 
 // Check if the current map is finished.

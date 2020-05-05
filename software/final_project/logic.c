@@ -44,6 +44,7 @@ void init_game(Game* game) {
     game->pinky.revive_cntdown = 0;
     game->inky.revive_cntdown = 0;
     game->clyde.revive_cntdown = 0;
+    game->player.points = 0;
 
     // Find tiles in this map and assign them.
     uint8_t i, j;
@@ -144,6 +145,8 @@ void tickgame(Game* board, char keypress) {
             }
         }
     }
+
+    if(board->player.points > board->highscore) board->highscore = board->player.points;
 
     // Ghosts move.
     blinkys_move(board);
@@ -1016,6 +1019,12 @@ void updateBoard(Game* game) {
 	drawTile(game->clyde.ypos*2+21, game->clyde.xpos, 6, 4);
 
 	clearQueue();
+    // Draw score.
+    char[8] score_c, hiscore_c;
+    sprintf(score_c, "  %06d", game->player.points);
+    sprintf(hiscore_c, "  %06d", game->highscore);
+    writeText(2,1,score_c,0);
+    writeText(2,3,hiscore_c,0);
 }
 
 #ifdef __cplusplus

@@ -29,11 +29,11 @@
 1587795244 source:c:\lab7\final_project\software\proof-of-concept\pacman\main.c
 	<stdio.h>
 
-1588718983 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/main.c
+1588720192 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/main.c
 	<stdio.h>
 	"logic.h"
 
-1588718816 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.c
+1588720004 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.c
 	<stdio.h>
 	<stdlib.h>
 	<memory.h>
@@ -41,7 +41,7 @@
 	<time.h>
 	"logic.h"
 
-1588662112 /home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.h
+1588719933 /home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.h
 	<stdint.h>
 	<stdbool.h>
 

@@ -3,6 +3,7 @@
 
 int main(int argc, char** argv) {
     Game maingame;
+    maingame.current_board = 0;
     init_game(&maingame);
     printf("Game initialization Complete\n");
 

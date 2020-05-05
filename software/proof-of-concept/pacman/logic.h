@@ -7,6 +7,7 @@
 
 #define _BOARD_W 15
 #define _BOARD_H 15
+#define _BOARD_COUNT 1
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -64,7 +65,9 @@ typedef enum _game_state {
 } GameState;
 
 typedef struct _game_board {
-    Tile game_map[15][15];
+    Tile game_map[_BOARD_H][_BOARD_W];
+    uint8_t current_board;
+    uint16_t highscore;
     Player player;
     Ghost blinky;
     Ghost pinky;
@@ -75,7 +78,7 @@ typedef struct _game_board {
 } Game;
 
 // Game boards. May have multiple levels, so an array.
-static TileExpanded GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
+static TileExpanded GAME_BOARDS[_BOARD_COUNT][_BOARD_H][_BOARD_W] = {
     {
         {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
         {0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0},

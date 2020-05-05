@@ -76,6 +76,7 @@ typedef struct __tile_col {
 typedef struct _game_board {
     Tile game_map[15][15];
     uint8_t current_board;
+    uint16_t highscore;
     Player player;
     Ghost blinky;
     Ghost pinky;
