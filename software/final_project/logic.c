@@ -14,6 +14,12 @@ extern "C" {
 #include "hardware.h"
 #include "updater.h"
 
+// Static function declarations.
+static inline bool is_over(Game* board);
+static inline Point stack_peek(LinkedPoints* head);
+static inline LinkedPoints* stack_pop(LinkedPoints* head, Point* popped_data);
+static inline bool PointEquals(const Point a, const Point b);
+
 // Data storing mechanics explanation.
 // Board size is 15x15, as an array. First argument is height, second argument is width.
 
@@ -106,11 +112,10 @@ void tickgame(Game* board, char keypress) {
     if(board->game_map[new_xpos][new_ypos] != WALL) {
         // New position is valid. Check if player actually moved.
         if(player_moved) {
-            board->player.xpos = new_xpos;
-            board->player.ypos = new_ypos;
-            // Add both tiles to update queue.
-            addPendingPos(board->player.xpos, board->player.ypos);
-            addPendingPos(new_xpos, new_ypos);
+        	addPendingPos(board->player.xpos, board->player.ypos);
+        	addPendingPos(new_xpos, new_ypos);
+            board->player.xpos = (uint8_t)new_xpos;
+            board->player.ypos = (uint8_t)new_ypos;
             // Pick the tile up.
             switch(board->game_map[new_xpos][new_ypos]) {
                 case CANDY:
@@ -121,7 +126,7 @@ void tickgame(Game* board, char keypress) {
                 case SUPER:
                     board->game_map[new_xpos][new_ypos] = WAY;
                     board->player.points += 100;
-                    board->player.invincible = 15*60;   // 15 seconds.
+                    board->player.invincible = 15;   // 15 seconds.
                     board->candy_count -= 1;
                     break;
                 case WALL:  // which should not happen
@@ -133,28 +138,36 @@ void tickgame(Game* board, char keypress) {
 
     // Ghosts move.
     blinkys_move(board);
+    printf("Blinky\n");
+    fflush(stdout);
     pinkys_move(board, keypress);
-    inkys_move(board);
+    printf("Pinky\n");
+    fflush(stdout);
     clydes_move(board);
+    printf("Clyde\n");
+    fflush(stdout);
+    inkys_move(board);
+    printf("Inky DONE\n");
+    fflush(stdout);
 
     // Check if the player met a ghost.
     if(board->player.invincible > 0) {
         // Ghost gets eaten. Grant points and set ghost away.
         if(board->player.xpos == board->blinky.xpos && board->player.ypos == board->blinky.ypos) {
             // Met Blinky when invincible.
-            board->blinky.revive_cntdown = 15*60;
+            board->blinky.revive_cntdown = 15;
             board->player.points += 200;
         } else if (board->player.xpos == board->inky.xpos && board->player.ypos == board->inky.ypos) {
             // Met inky when invincible.
-            board->inky.revive_cntdown = 15*60;
+            board->inky.revive_cntdown = 15;
             board->player.points += 200;
         } else if (board->player.xpos == board->pinky.xpos && board->player.ypos == board->pinky.ypos) {
             // Met pinky when invincible.
-            board->pinky.revive_cntdown = 15*60;
+            board->pinky.revive_cntdown = 15;
             board->player.points += 200;
         } else if (board->player.xpos == board->clyde.xpos && board->player.ypos == board->clyde.ypos) {
             // Met clyde when invincible.
-            board->clyde.revive_cntdown = 15*60;
+            board->clyde.revive_cntdown = 15;
             board->player.points += 200;
         }
     } else {
@@ -181,8 +194,7 @@ void tickgame(Game* board, char keypress) {
 
 // Check if the current map is finished.
 // The whole game is passed so we can maintain the array shape.
-static inline bool is_over(Game* board)
-{
+static inline bool is_over(Game* board) {
     return board -> candy_count == 0;
 }
 
@@ -195,13 +207,21 @@ void recur_free(LinkedPoints* lp)
     }
 }
 
-// LinkedPoints as stack: push
-// Returns the new head (head will change)
+// Temporary distance used for both blinky and pinky.
+// Also used as index for "minheap"
+static int8_t distances[_BOARD_H][_BOARD_W];
+
+// MinHeap Push.
+// Data in this linked list will be sorted by distance. Smaller distance comes first.
 LinkedPoints* stack_push(LinkedPoints* head, const Point* data) {
-    LinkedPoints* newPoint = malloc(sizeof(LinkedPoints));
-    newPoint->curr = *data;
-    newPoint->next = head;
-    return newPoint;
+    if(head == nullptr || distances[head->curr.xpos][head->curr.ypos] >= distances[data->xpos][data->ypos]) {
+        LinkedPoints* newPoint = malloc(sizeof(LinkedPoints));
+        newPoint->curr = *data;
+        newPoint->next = head;
+        return newPoint;
+    } else {
+        return stack_push(head->next, data);
+    }
 }
 
 // Peek the top of the stack.
@@ -228,15 +248,19 @@ static inline bool PointEquals(const Point a, const Point b) {
 
 // Blinky. Use Dijkstra to find the shortest path to the player.
 void blinkys_move(Game* game) {
+    //Blinky is dead
+    if(game->blinky.revive_cntdown > 0) {
+        game->blinky.revive_cntdown -= 1;
+        return;
+    }
     LinkedPoints* dijkstra_fringe;
     dijkstra_fringe = nullptr;
     // Put Blinky's current position into fringe.
-    int8_t distances[_BOARD_H][_BOARD_W];
     bool dst_finalize[_BOARD_H][_BOARD_W];
     Tile tmp_map[_BOARD_H][_BOARD_W];
 
+    // Copy a map, and mark other ghosts as walls.
     memcpy(tmp_map, game->game_map, sizeof(tmp_map));
-
     // Mark other ghosts as obstacles.
     tmp_map[game->inky.xpos][game->inky.ypos] = WALL;
     tmp_map[game->clyde.xpos][game->clyde.ypos] = WALL;
@@ -245,7 +269,7 @@ void blinkys_move(Game* game) {
     uint8_t i, j;
 
     for(i = 0; i<_BOARD_H;i+=1) {
-        for(j=0; j<_BOARD_W;j+=1) {
+        for(j = 0; j<_BOARD_W;j+=1) {
             distances[i][j] = 63; //Something really long.
             dst_finalize[i][j] = false; // All not finalized.
         }
@@ -257,22 +281,24 @@ void blinkys_move(Game* game) {
     player_pos.xpos = game->player.xpos;
     player_pos.ypos = game->player.ypos;
     // Propagate from player to ghost.
-    stack_push(dijkstra_fringe, &player_pos);
+    dijkstra_fringe = stack_push(dijkstra_fringe, &player_pos);
 
     while(!stack_isempty(dijkstra_fringe)) {
         Point curr_seek;
         dijkstra_fringe = stack_pop(dijkstra_fringe, &curr_seek);
         dst_finalize[curr_seek.xpos][curr_seek.ypos] = true;
+        printf("*");
+        fflush(stdout);
         // Investigate UP of current point.
         int16_t nxpos = curr_seek.xpos;
         int16_t nypos = curr_seek.ypos;
         nxpos = (nxpos - 1 + _BOARD_H) % _BOARD_H;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe = stack_push(dijkstra_fringe, &npt);
         }
 
@@ -281,11 +307,11 @@ void blinkys_move(Game* game) {
         nypos = curr_seek.ypos;
         nxpos = (nxpos + 1) % _BOARD_H;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe = stack_push(dijkstra_fringe, &npt);
         }
 
@@ -294,11 +320,11 @@ void blinkys_move(Game* game) {
         nypos = curr_seek.ypos;
         nypos = (nypos - 1 + _BOARD_W) % _BOARD_W;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe = stack_push(dijkstra_fringe, &npt);
         }
 
@@ -307,11 +333,11 @@ void blinkys_move(Game* game) {
         nypos = curr_seek.ypos;
         nypos = (nypos + 1) % _BOARD_W;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe = stack_push(dijkstra_fringe, &npt);
         }
     }
@@ -327,9 +353,9 @@ void blinkys_move(Game* game) {
     nxpos = (nxpos - 1 + _BOARD_H) % _BOARD_H;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate DOWN.
@@ -338,9 +364,9 @@ void blinkys_move(Game* game) {
     nxpos = (nxpos + 1) % _BOARD_H;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate LEFT.
@@ -349,9 +375,9 @@ void blinkys_move(Game* game) {
     nypos = (nypos - 1 + _BOARD_W) % _BOARD_W;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate RIGHT.
@@ -360,77 +386,60 @@ void blinkys_move(Game* game) {
     nypos = (nypos + 1) % _BOARD_W;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     if(best_dist != 63) {
-    	// Add to update queue.
     	addPendingPos(game->blinky.xpos, game->blinky.ypos);
     	addPendingPos(best_xpos, best_ypos);
-    	// Move blinky.
         game->blinky.xpos = best_xpos;
         game->blinky.ypos = best_ypos;
     }
+
+    recur_free(dijkstra_fringe);
 }
 
 // Pinky. Ambush the player by cutting a way towards the player's moving direction.
 
-int goal_pos_x = 0;
-int goal_pos_y = 0;
+static int16_t goal_pos_x = 0;
+static int16_t goal_pos_y = 0;
 
 void det_goal_pos(Game* game, char keypress) {             //function to determine the postion for pinky
+    goal_pos_x = game->player.xpos;
+    goal_pos_y = game->player.ypos;
+
 	if (keypress == 'w' || keypress == 'W') {
-		goal_pos_x = game->player.xpos;
-		goal_pos_y = game->player.ypos - 5;     //intercept at 5 tile in front
-		if (goal_pos_y < 0) {
-			goal_pos_y = 0;                     //prevent negative value breaking the game
-		}
+		goal_pos_y = (goal_pos_y - 5 + _BOARD_H) % _BOARD_H;
+		while(game->game_map[goal_pos_x][goal_pos_y] == WALL) goal_pos_y = (goal_pos_y + 1) % _BOARD_H;
 	}
 	if (keypress == 's' || keypress == 'S') {
-		goal_pos_x = game->player.xpos;
-		goal_pos_y = game->player.ypos + 5;
-		if (goal_pos_y > 479) {
-			goal_pos_y = 479;
-		}
+		goal_pos_y = (game -> player.ypos + 5) % _BOARD_H;
+		while(game->game_map[goal_pos_x][goal_pos_y] == WALL) goal_pos_y = (goal_pos_y - 1 + _BOARD_H) % _BOARD_H;
 	}
 	if (keypress == 'a' || keypress == 'A') {
-		goal_pos_x = game->player.xpos - 5;
-		goal_pos_y = game->player.ypos;
-		if (goal_pos_x < 0) {
-			goal_pos_x = 0;
-		}
+		goal_pos_x = (game->player.xpos - 5 + _BOARD_W) % _BOARD_W;
+		while(game->game_map[goal_pos_x][goal_pos_y] == WALL) goal_pos_x = (goal_pos_x + 1) % _BOARD_W;
 	}
 	if (keypress == 'd' || keypress == 'D') {
-		goal_pos_x = game->player.xpos + 5;
-		goal_pos_y = game->player.ypos;
-		if (goal_pos_y > 639) {
-			goal_pos_x = 639;
-		}
+		goal_pos_x = (game->player.xpos + 5) % _BOARD_W;
+		while(game->game_map[goal_pos_x][goal_pos_y] == WALL) goal_pos_x = (goal_pos_x - 1 + _BOARD_W) % _BOARD_W;
 	}
 }
 
 void pinkys_move(Game* game, char keypress) {
-	det_goal_pos(game, keypress);          //first determine the goal position of pinky
+    // Pinky is dead.
+    if(game->pinky.revive_cntdown > 0) {
+        game->pinky.revive_cntdown -= 1;
+        return;
+    }
 
-	//Reapply dijkstra to the desired goal pos for pinky
-    LinkedPoints* dijkstra_fringe_pinky;
-    dijkstra_fringe_pinky = nullptr;
-    // Put Pinky's current position into fringe_pinky.
-    int8_t distances[_BOARD_H][_BOARD_W];
     bool dst_finalize[_BOARD_H][_BOARD_W];
     Tile tmp_map[_BOARD_H][_BOARD_W];
-
     memcpy(tmp_map, game->game_map, sizeof(tmp_map));
 
-    // Mark other ghosts as obstacles.
-    tmp_map[game->inky.xpos][game->inky.ypos] = WALL;
-    tmp_map[game->clyde.xpos][game->clyde.ypos] = WALL;
-    tmp_map[game->blinky.xpos][game->blinky.ypos] = WALL;
-
     uint8_t i, j;
-
     for(i = 0; i<_BOARD_H;i+=1) {
         for(j=0; j<_BOARD_W;j+=1) {
             distances[i][j] = 63; //Something really long.
@@ -438,16 +447,30 @@ void pinkys_move(Game* game, char keypress) {
         }
     }
 
-    distances[goal_pos_x][goal_pos_y] = 0;
+    det_goal_pos(game, keypress);          // Determine the goal position of pinky
+    distances[goal_pos_x][goal_pos_y] = 0; // Set the distance of goal to 0.
+
+	//Reapply dijkstra to the desired goal pos for pinky
+    LinkedPoints* dijkstra_fringe_pinky;
+    dijkstra_fringe_pinky = nullptr;
 
     Point desired_pos;
-    desired_pos.xpos = goal_pos_x;
-    desired_pos.ypos = goal_pos_y;
+    desired_pos.xpos = (uint8_t)goal_pos_x;
+    desired_pos.ypos = (uint8_t)goal_pos_y;
     // Propagate from desired position to ghost.
-    stack_push(dijkstra_fringe_pinky, &desired_pos);
+    dijkstra_fringe_pinky = stack_push(dijkstra_fringe_pinky, &desired_pos);
+
+
+
+    // Mark other ghosts as obstacles.
+    tmp_map[game->inky.xpos][game->inky.ypos] = WALL;
+    tmp_map[game->clyde.xpos][game->clyde.ypos] = WALL;
+    tmp_map[game->blinky.xpos][game->blinky.ypos] = WALL;
 
     while(!stack_isempty(dijkstra_fringe_pinky)) {
         Point curr_seek;
+        printf("*");
+        fflush(stdout);
         dijkstra_fringe_pinky = stack_pop(dijkstra_fringe_pinky, &curr_seek);
         dst_finalize[curr_seek.xpos][curr_seek.ypos] = true;
         // Investigate UP of current point.
@@ -455,11 +478,11 @@ void pinkys_move(Game* game, char keypress) {
         int16_t nypos = curr_seek.ypos;
         nxpos = (nxpos - 1 + _BOARD_H) % _BOARD_H;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe_pinky = stack_push(dijkstra_fringe_pinky, &npt);
         }
 
@@ -468,11 +491,11 @@ void pinkys_move(Game* game, char keypress) {
         nypos = curr_seek.ypos;
         nxpos = (nxpos + 1) % _BOARD_H;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos] && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe_pinky = stack_push(dijkstra_fringe_pinky, &npt);
         }
 
@@ -481,11 +504,11 @@ void pinkys_move(Game* game, char keypress) {
         nypos = curr_seek.ypos;
         nypos = (nypos - 1 + _BOARD_W) % _BOARD_W;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos]  && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe_pinky = stack_push(dijkstra_fringe_pinky, &npt);
         }
 
@@ -494,11 +517,11 @@ void pinkys_move(Game* game, char keypress) {
         nypos = curr_seek.ypos;
         nypos = (nypos + 1) % _BOARD_W;
 
-        if(game->game_map[nxpos][nypos] != WALL) {
+        if(!dst_finalize[nxpos][nypos]  && tmp_map[nxpos][nypos] != WALL) {
             distances[nxpos][nypos] = distances[nxpos][nypos] > distances[curr_seek.xpos][curr_seek.ypos]? distances[curr_seek.xpos][curr_seek.ypos]+1 : distances[nxpos][nypos];
             Point npt;
-            npt.xpos = nxpos;
-            npt.ypos = nypos;
+            npt.xpos = (uint8_t)nxpos;
+            npt.ypos = (uint8_t)nypos;
             dijkstra_fringe_pinky = stack_push(dijkstra_fringe_pinky, &npt);
         }
     }
@@ -514,9 +537,9 @@ void pinkys_move(Game* game, char keypress) {
     nxpos = (nxpos - 1 + _BOARD_H) % _BOARD_H;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate DOWN.
@@ -525,9 +548,9 @@ void pinkys_move(Game* game, char keypress) {
     nxpos = (nxpos + 1) % _BOARD_H;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate LEFT.
@@ -536,9 +559,9 @@ void pinkys_move(Game* game, char keypress) {
     nypos = (nypos - 1 + _BOARD_W) % _BOARD_W;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     // Investigate RIGHT.
@@ -547,94 +570,142 @@ void pinkys_move(Game* game, char keypress) {
     nypos = (nypos + 1) % _BOARD_W;
 
     if(distances[nxpos][nypos] < best_dist) {
-        best_dist = distances[nxpos][nypos];
-        best_xpos = nxpos;
-        best_ypos = nypos;
+        best_dist = (uint8_t)distances[nxpos][nypos];
+        best_xpos = (uint8_t)nxpos;
+        best_ypos = (uint8_t)nypos;
     }
 
     if(best_dist != 63) {
+    	addPendingPos(game->pinky.xpos, game->pinky.ypos);
+    	addPendingPos(best_xpos, best_ypos);
         game->pinky.xpos = best_xpos;
         game->pinky.ypos = best_ypos;
     }
+
+    recur_free(dijkstra_fringe_pinky);
 }
 
 
-uint8_t ikdirs[4] = {5,5,5,5};
-uint8_t lastdirection = 0;
+static uint8_t ikdirs[4] = {5,5,5,5};
+static uint8_t lastdirection = 0;
 // Inky. Patrol an area.
 // Use a psuedo-Mattrox distribution.
-void inkys_move(Game*game) {
+void inkys_move(Game* game) {
+    // Inky's dead.
+    if(game->inky.revive_cntdown > 0) {
+        game->inky.revive_cntdown -= 1;
+        return;
+    }
+    Tile tmp_map[_BOARD_H][_BOARD_W];
+    memcpy(tmp_map, game->game_map, sizeof(tmp_map));
+
+    // Mark other ghosts as obstacles.
+    tmp_map[game->pinky.xpos][game->pinky.ypos] = WALL;
+    tmp_map[game->clyde.xpos][game->clyde.ypos] = WALL;
+    tmp_map[game->blinky.xpos][game->blinky.ypos] = WALL;
+
 	// A slightly higher chance to stay the same direction.
 	ikdirs[lastdirection] += 3;
 	uint8_t nextlast;
-	uint8_t direction = rand() % (ikdirs[0] + ikdirs[1] + ikdirs[2] + ikdirs[3]);
+    uint8_t direction;
+    uint8_t trials = 0;
+    bool success = false;
 
-	uint8_t newx = game->inky.xpos;
-	uint8_t newy = game->inky.ypos;
-	if(direction < ikdirs[0]) {
-		newy -= 1;
-		ikdirs[0] += 1;
-		nextlast = 0;
-	} else if (direction < ikdirs[0] + ikdirs[1]) {
-		newy += 1;
-		ikdirs[1] += 1;
-		nextlast = 1;
-	} else if (direction < ikdirs[0] + ikdirs[1] + ikdirs[2]) {
-		newx -= 1;
-		ikdirs[2] += 1;
-		nextlast = 2;
-	} else {
-		newx += 1;
-		ikdirs[3] += 1;
-		nextlast = 3;
-	}
+    while(!success && trials < 10) {
+        printf("*");
+        direction = rand() % (ikdirs[0] + ikdirs[1] + ikdirs[2] + ikdirs[3]);
+        uint8_t newx = game->inky.xpos;
+        uint8_t newy = game->inky.ypos;
 
-	ikdirs[lastdirection] -= 10;
-	lastdirection = nextlast;
+        if(direction < ikdirs[0]) {
+            newy -= 1;
+            ikdirs[0] += 1;
+            nextlast = 0;
+        } else if (direction < ikdirs[0] + ikdirs[1]) {
+            newy += 1;
+            ikdirs[1] += 1;
+            nextlast = 1;
+        } else if (direction < ikdirs[0] + ikdirs[1] + ikdirs[2]) {
+            newx -= 1;
+            ikdirs[2] += 1;
+            nextlast = 2;
+        } else {
+            newx += 1;
+            ikdirs[3] += 1;
+            nextlast = 3;
+        }
 
-	if(game->game_map[newx][newy] != WALL) {
-		addPendingPos(newx, newy);
-		addPendingPos(game->inky.xpos, game->inky.ypos);
-		game->inky.xpos = newx;
-		game->inky.ypos = newy;
-	}
+        newx = (newx + _BOARD_W) % _BOARD_W;
+        newy = (newy + _BOARD_H) % _BOARD_H;
+
+        ikdirs[lastdirection] -= 10;
+        lastdirection = nextlast;
+
+        if(tmp_map[newx][newy] != WALL) {
+        	addPendingPos(game->inky.xpos, game->inky.ypos);
+        	addPendingPos(newx, newy);
+            game->inky.xpos = newx;
+            game->inky.ypos = newy;
+            success = true;
+        }
+        trials += 1;
+    }
 }
 
 // Clyde. Move randomly.
 void clydes_move(Game* game) {
-	int rand_direction = rand() % 4;
-	int newx, newy;
-	switch(rand_direction) {
-		case 0: {
-			newx = game->clyde.xpos + 1;
-			newy = game->clyde.ypos;
-			break;
-		}
-		case 1: {
-			newx = game->clyde.xpos - 1;
-			newy = game->clyde.ypos;
-			break;
-		}
-		case 2: {
-			newx = game->clyde.xpos;
-			newy = game->clyde.ypos + 1;
-			break;
-		}
-		default: {
-			newx = game->clyde.xpos;
-			newy = game->clyde.ypos - 1;
-			break;
-		}
-	}
+    // Clyde's dead.
+    if(game->clyde.revive_cntdown > 0) {
+        game->clyde.revive_cntdown -= 1;
+        return;
+    }
+    Tile tmp_map[_BOARD_H][_BOARD_W];
+    memcpy(tmp_map, game->game_map, sizeof(tmp_map));
 
-	newx = (newx+16) % 16;
-	newy = (newy+16) % 16;
-	if(game->game_map[newx][newy] != WALL) {
-		// Add to update queue.
-		addPendingPos(game->clyde.xpos, game->clyde.ypos);
-		addPendingPos(newx, newy);
-		game->clyde.xpos = newx;
-		game->clyde.ypos = newy;
+    // Mark other ghosts as obstacles.
+    tmp_map[game->pinky.xpos][game->inky.ypos] = WALL;
+    tmp_map[game->inky.xpos][game->inky.ypos] = WALL;
+    tmp_map[game->blinky.xpos][game->blinky.ypos] = WALL;
+    uint8_t rand_direction;
+    uint8_t trials = 0;
+    bool success = false;
+    while(!success && trials < 10) {
+        printf("*");
+        rand_direction = rand() % 4;
+        int16_t newx, newy;
+        switch(rand_direction) {
+            case 0: {
+                newx = game->clyde.xpos + 1;
+                newy = game->clyde.ypos;
+                break;
+            }
+            case 1: {
+                newx = game->clyde.xpos - 1;
+                newy = game->clyde.ypos;
+                break;
+            }
+            case 2: {
+                newx = game->clyde.xpos;
+                newy = game->clyde.ypos + 1;
+                break;
+            }
+            default: {
+                newx = game->clyde.xpos;
+                newy = game->clyde.ypos - 1;
+                break;
+            }
+        }
+        newx = (newx + _BOARD_W) % _BOARD_W;
+        newy = (newy + _BOARD_H) % _BOARD_H;
+        if(tmp_map[newx][newy] != WALL) {
+            // Add to update queue.
+        	addPendingPos(game->clyde.xpos, game->clyde.ypos);
+        	addPendingPos(newx, newy);
+            game->clyde.xpos = (uint8_t)newx;
+            game->clyde.ypos = (uint8_t)newy;
+            success = true;
+        }
+        trials += 1;
 	}
 }
 

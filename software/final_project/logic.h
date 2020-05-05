@@ -84,7 +84,7 @@ typedef struct _game_board {
 } Game;
 
 // Game boards. May have multiple levels, so an array.
-static uint8_t GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
+uint8_t GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
     {
         {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
         {0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0},
@@ -106,12 +106,8 @@ static uint8_t GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
 
 void init_game(Game* game);
 void tickgame(Game* board, char keypress);
-static inline bool is_over(Game* board);
 void recur_free(LinkedPoints* lp);
 LinkedPoints* stack_push(LinkedPoints* head, const Point* data);
-static inline Point stack_peek(LinkedPoints* head);
-static inline LinkedPoints* stack_pop(LinkedPoints* head, Point* popped_data);
-static inline bool PointEquals(const Point a, const Point b);
 void blinkys_move(Game* game);
 void pinkys_move(Game* game, char keypress);
 void inkys_move(Game* game);
