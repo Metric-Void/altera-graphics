@@ -14,7 +14,12 @@ int main(int argc, char** argv) {
         print_board(&maingame);
         getKB = getchar();
     }
-    if(maingame.state == DIED) printf("You lost.\n");
+    if(maingame.state == DIED) {
+        printf("You lost.\n");
+    } else {
+        printf("You won.\n");
+    }
+
     printf("Exiting...");
     return 0;
 }

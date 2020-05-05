@@ -19,6 +19,7 @@ void init_game(Game* game) {
 
     game->candy_count = 0;
     game->state = PREINIT;
+    game->player.invincible = 0;
 
     printf("Player MOVE start\n");
     // Find tiles in this map and assign them.
@@ -172,6 +173,8 @@ void tickgame(Game* board, char keypress) {
         }
     }
 
+    if(board->player.invincible > 0) { board->player.invincible -= 1; }
+    printf("You have invincibility of %d turns\n",board->player.invincible);
     // Check if game finished.
     if(is_over(board)) board -> state = WON;
 }
@@ -201,7 +204,8 @@ LinkedPoints* stack_push(LinkedPoints* head, const Point* data) {
         newPoint->next = head;
         return newPoint;
     } else {
-        return stack_push(head->next, data);
+        head-> next = stack_push(head->next, data);
+        return head;
     }
 }
 
