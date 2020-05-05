@@ -8,6 +8,9 @@
 #define _BOARD_W 15
 #define _BOARD_H 15
 
+#include <stdint.h>
+#include <stdbool.h>
+
 typedef struct _point {
     uint8_t xpos;
     uint8_t ypos;
@@ -92,6 +95,9 @@ static TileExpanded GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
     }
 };
 
+// Used for MinHeap.
+static int8_t distances[_BOARD_H][_BOARD_W];
+
 void init_game(Game* game);
 void tickgame(Game* board, char keypress);
 static inline bool is_over(Game* board);
@@ -100,9 +106,12 @@ LinkedPoints* stack_push(LinkedPoints* head, const Point* data);
 static inline Point stack_peek(LinkedPoints* head);
 static inline LinkedPoints* stack_pop(LinkedPoints* head, Point* popped_data);
 static inline bool PointEquals(const Point a, const Point b);
+static inline bool stack_isempty(const LinkedPoints* head);
 void blinkys_move(Game* game);
-void pinkys_move(Game* game);
+void det_goal_pos(Game* game, char keypress);
+void pinkys_move(Game* game, char keypress);
 void inkys_move(Game* game);
 void clydes_move(Game* game);
+void print_board(Game* game);
 
 #endif // LOGIC_H_
