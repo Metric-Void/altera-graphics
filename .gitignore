@@ -2,6 +2,9 @@
 *.elf
 *.sof
 *.cdf
+*.o
+*.d
+*.exe
 
 # Ignore Quartus File Lock
 *.flock
