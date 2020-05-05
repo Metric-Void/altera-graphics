@@ -224,6 +224,11 @@
    }
    element otg_hpi_address.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "80";
@@ -245,9 +250,14 @@
    }
    element otg_hpi_cs.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "112";
+         value = "16";
          type = "String";
       }
    }
@@ -261,9 +271,14 @@
    }
    element otg_hpi_data.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "288";
+         value = "96";
          type = "String";
       }
    }
@@ -277,9 +292,14 @@
    }
    element otg_hpi_r.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "272";
+         value = "32";
          type = "String";
       }
    }
@@ -293,9 +313,14 @@
    }
    element otg_hpi_reset.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "96";
+         value = "64";
          type = "String";
       }
    }
@@ -309,9 +334,14 @@
    }
    element otg_hpi_w.s1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "256";
+         value = "48";
          type = "String";
       }
    }
@@ -380,7 +410,7 @@
    {
       datum baseAddress
       {
-         value = "32";
+         value = "256";
          type = "String";
       }
    }
@@ -401,7 +431,7 @@
    {
       datum baseAddress
       {
-         value = "64";
+         value = "288";
          type = "String";
       }
    }
@@ -561,7 +591,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' type='altera_avalon_onchip_memory2.s1' /><slave name='timer_0.s1' start='0x20' end='0x40' type='altera_avalon_timer.s1' /><slave name='vga_vs.s1' start='0x40' end='0x50' type='altera_avalon_pio.s1' /><slave name='otg_hpi_address.s1' start='0x50' end='0x60' type='altera_avalon_pio.s1' /><slave name='otg_hpi_reset.s1' start='0x60' end='0x70' type='altera_avalon_pio.s1' /><slave name='otg_hpi_cs.s1' start='0x70' end='0x80' type='altera_avalon_pio.s1' /><slave name='Color_Palette_0.avalon_slave_0' start='0x80' end='0x100' type='Color_Palette.avalon_slave_0' /><slave name='otg_hpi_w.s1' start='0x100' end='0x110' type='altera_avalon_pio.s1' /><slave name='otg_hpi_r.s1' start='0x110' end='0x120' type='altera_avalon_pio.s1' /><slave name='otg_hpi_data.s1' start='0x120' end='0x130' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0x130' end='0x140' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0x148' end='0x150' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x150' end='0x158' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x1000' end='0x1800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='Sprite_RAM_0.avalon_slave_0' start='0x1800' end='0x2000' type='Sprite_RAM.avalon_slave_0' /><slave name='Tile_Table_0.avalon_slave' start='0x8000' end='0x10000' type='Tile_Table.avalon_slave' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x0' end='0x10' type='altera_avalon_onchip_memory2.s1' /><slave name='otg_hpi_cs.s1' start='0x10' end='0x20' type='altera_avalon_pio.s1' /><slave name='otg_hpi_r.s1' start='0x20' end='0x30' type='altera_avalon_pio.s1' /><slave name='otg_hpi_w.s1' start='0x30' end='0x40' type='altera_avalon_pio.s1' /><slave name='otg_hpi_reset.s1' start='0x40' end='0x50' type='altera_avalon_pio.s1' /><slave name='otg_hpi_address.s1' start='0x50' end='0x60' type='altera_avalon_pio.s1' /><slave name='otg_hpi_data.s1' start='0x60' end='0x70' type='altera_avalon_pio.s1' /><slave name='Color_Palette_0.avalon_slave_0' start='0x80' end='0x100' type='Color_Palette.avalon_slave_0' /><slave name='timer_0.s1' start='0x100' end='0x120' type='altera_avalon_timer.s1' /><slave name='vga_vs.s1' start='0x120' end='0x130' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0x130' end='0x140' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0x148' end='0x150' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x150' end='0x158' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x1000' end='0x1800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='Sprite_RAM_0.avalon_slave_0' start='0x1800' end='0x2000' type='Sprite_RAM.avalon_slave_0' /><slave name='Tile_Table_0.avalon_slave' start='0x8000' end='0x10000' type='Tile_Table.avalon_slave' /><slave name='sdram.s1' start='0x10000000' end='0x18000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1161,18 +1191,9 @@
    kind="avalon"
    version="19.1"
    start="nios2_gen2_0.data_master"
-   end="timer_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="19.1"
-   start="nios2_gen2_0.data_master"
    end="otg_hpi_data.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0120" />
+  <parameter name="baseAddress" value="0x0060" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1181,7 +1202,7 @@
    start="nios2_gen2_0.data_master"
    end="otg_hpi_r.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0110" />
+  <parameter name="baseAddress" value="0x0020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1190,7 +1211,7 @@
    start="nios2_gen2_0.data_master"
    end="otg_hpi_w.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0100" />
+  <parameter name="baseAddress" value="0x0030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1199,7 +1220,7 @@
    start="nios2_gen2_0.data_master"
    end="otg_hpi_cs.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0070" />
+  <parameter name="baseAddress" value="0x0010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1208,7 +1229,7 @@
    start="nios2_gen2_0.data_master"
    end="otg_hpi_reset.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0060" />
+  <parameter name="baseAddress" value="0x0040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1226,7 +1247,16 @@
    start="nios2_gen2_0.data_master"
    end="vga_vs.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0040" />
+  <parameter name="baseAddress" value="0x0120" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="19.1"
+   start="nios2_gen2_0.data_master"
+   end="timer_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0100" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1285,7 +1315,6 @@
    version="19.1"
    start="sdram_pll.c2"
    end="jtag_uart_0.clk" />
- <connection kind="clock" version="19.1" start="sdram_pll.c2" end="timer_0.clk" />
  <connection
    kind="clock"
    version="19.1"
@@ -1310,6 +1339,7 @@
    start="sdram_pll.c2"
    end="nios2_gen2_0.clk" />
  <connection kind="clock" version="19.1" start="sdram_pll.c2" end="vga_vs.clk" />
+ <connection kind="clock" version="19.1" start="sdram_pll.c2" end="timer_0.clk" />
  <connection
    kind="clock"
    version="19.1"
@@ -1465,11 +1495,6 @@
    kind="reset"
    version="19.1"
    start="clk_0.clk_reset"
-   end="timer_0.reset" />
- <connection
-   kind="reset"
-   version="19.1"
-   start="clk_0.clk_reset"
    end="otg_hpi_data.reset" />
  <connection
    kind="reset"
@@ -1511,6 +1536,11 @@
    version="19.1"
    start="clk_0.clk_reset"
    end="vga_vs.reset" />
+ <connection
+   kind="reset"
+   version="19.1"
+   start="clk_0.clk_reset"
+   end="timer_0.reset" />
  <connection
    kind="reset"
    version="19.1"
@@ -1586,6 +1616,11 @@
    version="19.1"
    start="nios2_gen2_0.debug_reset_request"
    end="vga_vs.reset" />
+ <connection
+   kind="reset"
+   version="19.1"
+   start="nios2_gen2_0.debug_reset_request"
+   end="timer_0.reset" />
  <connection
    kind="reset"
    version="19.1"

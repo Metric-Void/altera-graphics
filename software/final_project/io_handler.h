@@ -10,9 +10,16 @@
 #define otg_hpi_address			(volatile int*) 	OTG_HPI_ADDRESS_BASE
 #define otg_hpi_data			(volatile int*)	    OTG_HPI_DATA_BASE
 #define otg_hpi_r				(volatile char*)	OTG_HPI_R_BASE
-#define otg_hpi_cs				(volatile char*)	OTG_HPI_CS_BASE //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
+#define otg_hpi_cs				(volatile char*)	0x10 //FOR SOME REASON CS BASE BEHAVES WEIRDLY MIGHT HAVE TO SET MANUALLY
 #define otg_hpi_w				(volatile char*)	OTG_HPI_W_BASE
 #define otg_hpi_reset			(volatile char*)	OTG_HPI_RESET_BASE
+
+//#define otg_hpi_address		(volatile int*) 	0x50
+//#define otg_hpi_data			(volatile int*)	    0x60
+//#define otg_hpi_r				(volatile char*)	0x20
+//#define otg_hpi_cs			(volatile char*)	0x10
+//#define otg_hpi_w				(volatile char*)	0x30
+//#define otg_hpi_reset			(volatile char*)	0x40
 
 void IO_write(alt_u8 Address, alt_u16 Data);
 alt_u16 IO_read(alt_u8 Address);
