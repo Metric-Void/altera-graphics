@@ -2,6 +2,8 @@
 1587452074 source:/home/allen/codes/pacman/main.c
 	<stdio.h>
 
+1587795244 
+
 1587519592 source:/home/allen/codes/pacman/logic.c
 	<stdio.h>
 	<stdlib.h>
@@ -26,4 +28,20 @@
 
 1587795244 source:c:\lab7\final_project\software\proof-of-concept\pacman\main.c
 	<stdio.h>
+
+1588658755 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/main.c
+	<stdio.h>
+	"logic.h"
+
+1588658558 source:/home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.c
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<string.h>
+	<time.h>
+	"logic.h"
+
+1588656825 /home/allen/codes/ece385-final-project/software/proof-of-concept/pacman/logic.h
+	<stdint.h>
+	<stdbool.h>
 
