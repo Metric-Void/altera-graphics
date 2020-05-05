@@ -95,6 +95,9 @@ static TileExpanded GAME_BOARDS[1][_BOARD_H][_BOARD_W] = {
     }
 };
 
+// Used for MinHeap.
+static int8_t distances[_BOARD_H][_BOARD_W];
+
 void init_game(Game* game);
 void tickgame(Game* board, char keypress);
 static inline bool is_over(Game* board);
